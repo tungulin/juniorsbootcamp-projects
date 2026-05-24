@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   isRouteErrorResponse,
   Links,
@@ -9,9 +10,9 @@ import {
 
 import type { Route } from './+types/root';
 
-import { Header } from './pages/_layout';
-
 import './app.css';
+
+const queryClient = new QueryClient();
 
 export const Layout = ({ children }: { children: React.ReactNode }) => (
   <html lang='en'>
@@ -22,10 +23,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => (
       <Links />
     </head>
     <body>
-      <Header />
-      {children}
-      <ScrollRestoration />
-      <Scripts />
+      {/* <Header /> */}
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+      </QueryClientProvider>
     </body>
   </html>
 );

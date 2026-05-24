@@ -1,5 +1,5 @@
-import type { FormHTMLAttributes, ReactNode } from 'react';
-import type { ControllerProps, UseFormReturn } from 'react-hook-form';
+import type { ComponentProps, FormHTMLAttributes, ReactNode } from 'react';
+import type { UseFormReturn } from 'react-hook-form';
 
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
@@ -16,27 +16,28 @@ export const Form = ({ form, ...other }: FormProps) => (
   </FormProvider>
 );
 
-interface FormInputProps extends Omit<ControllerProps, 'render'> {
+interface FormInputProps extends ComponentProps<'input'> {
   description?: ReactNode;
   label?: ReactNode;
+  name: string;
 }
 
-export const FormInput = ({ label, description, ...other }: FormInputProps) => {
+export const FormInput = ({ label, description, name, ...other }: FormInputProps) => {
   const form = useFormContext();
 
   return (
     <Controller
-      {...other}
       render={({ field, fieldState }) => (
         <Field>
           {label && <FieldLabel data-invalid={fieldState.invalid}>{label}</FieldLabel>}
-          <Input {...field} />
+          <Input {...field} {...other} />
           {description && (
             <FieldDescription>Your API key is encrypted and stored securely.</FieldDescription>
           )}
         </Field>
       )}
       control={form.control}
+      name={name}
       rules={{ required: true }}
     />
   );

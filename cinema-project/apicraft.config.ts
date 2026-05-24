@@ -4,8 +4,10 @@ export default apicraft([
   {
     input: 'api.yaml',
     output: 'generated/api',
-    instance: 'fetches',
+    instance: 'axios',
+    baseUrl: 'https://juniorsbootcamp.ru',
     nameBy: 'path',
-    groupBy: 'tags'
+    groupBy: 'tags',
+    plugins: ['tanstack']
   }
 ]);
