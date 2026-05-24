@@ -9,7 +9,8 @@
     "typecheck": "react-router typegen && tsc",
     "format": "prettier --write .",
     "lint": "eslint . --fix",
-    "pretty": "pnpm typecheck && pnpm lint && pnpm format"
+    "pretty": "pnpm typecheck && pnpm lint && pnpm format",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
