@@ -1,0 +1,13 @@
+{
+  "scripts": {
+	"format": "prettier --write .",
+    "prepare": "husky",
+    "lint-staged": "pnpm --recursive run lint-staged"
+  },
+    "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+	  "@siberiacancode/eslint": "2.16.13",
+    "@siberiacancode/prettier": "^1.6.1"
+  }
+}
