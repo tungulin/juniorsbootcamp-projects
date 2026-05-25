@@ -1,8 +1,8 @@
 import { LogOut } from 'lucide-react';
 
-import { LogoIcon } from '@/components/icons';
-import { Button } from '@/components/ui/button';
-import { H4 } from '@/components/ui/typography';
+import { LogoIcon } from '@/shared/icons';
+import { Button } from '@/shared/ui/button';
+import { H4 } from '@/shared/ui/typography';
 
 export const Header = () => (
   <div className='mx-auto my-6 flex max-w-[75rem] items-center justify-between rounded-full border px-3 py-3'>

@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 
 import React from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/shadcn-utils';
 
 const createComponent = <T extends HTMLElement>(
   tag: keyof JSX.IntrinsicElements,

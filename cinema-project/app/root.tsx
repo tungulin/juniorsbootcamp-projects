@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration
 } from 'react-router';
+import { Toaster } from 'sonner';
 
 import type { Route } from './+types/root';
 
@@ -23,9 +24,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => (
       <Links />
     </head>
     <body>
-      {/* <Header /> */}
       <QueryClientProvider client={queryClient}>
         {children}
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </QueryClientProvider>

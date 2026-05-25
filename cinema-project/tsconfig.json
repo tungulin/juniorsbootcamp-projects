@@ -8,7 +8,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./app/*"],
-      "@/components/ui/*": ["./app/components/ui/*"],
+      "@/shared/ui/*": ["./app/shared/ui/*"],
       "@/public/*": ["./public/*"]
     },
     "resolveJsonModule": true,

@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 
-import { Form, FormInput } from '@/components/common';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { H3, P } from '@/components/ui/typography';
+import { Form, FormInput } from '@/shared/form';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { H3, P } from '@/shared/ui/typography';
 
 const Home = () => {
   const form = useForm();

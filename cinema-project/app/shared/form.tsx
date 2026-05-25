@@ -3,8 +3,8 @@ import type { UseFormReturn } from 'react-hook-form';
 
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
-import { Field, FieldDescription, FieldLabel } from '../ui/field';
-import { Input } from '../ui/input';
+import { Field, FieldDescription, FieldLabel } from './ui/field';
+import { Input } from './ui/input';
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   form: UseFormReturn;
