@@ -1,10 +1,10 @@
 import { Navigate, Outlet, useLocation } from 'react-router';
 
-import { Header } from './header';
+import { Header } from '../layout/header';
 
 const ProtectedRoute = () => {
   //   const { isAuthenticated } = useAuth();
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   const location = useLocation();
 
   if (!isAuthenticated) {

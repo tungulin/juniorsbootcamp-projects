@@ -2,20 +2,23 @@ import { useBoolean, useTimer } from '@siberiacancode/reactuse';
 import { formatDate } from 'date-fns';
 import { ChevronLeft } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { withMask } from 'use-mask-input';
 
 import { Form, FormInput } from '@/shared/form';
 import { LogoIcon } from '@/shared/icons';
-import { useAuthTokenLocalStorage } from '@/shared/localltorage';
+import { useAuthTokenLocalStorage, useUserLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2, H3, P } from '@/shared/ui/typography';
 
-import { usePostApiAuthOtpMutation, usePostApiUsersSigninMutation } from '../../../generated/api';
+import { usePostApiAuthOtpMutation, usePostApiUsersSigninMutation } from '../../generated/api';
 
 const Auth = () => {
   const [isSendingPhone, togglIsSendingPhone] = useBoolean(true);
+  const navigate = useNavigate();
+
   const formPhone = useForm();
   const formOtpCode = useForm();
 
@@ -23,7 +26,9 @@ const Auth = () => {
 
   const authOtp = usePostApiAuthOtpMutation();
   const signInUser = usePostApiUsersSigninMutation();
+
   const authTokenStorage = useAuthTokenLocalStorage();
+  const userTokenStorage = useUserLocalStorage();
 
   const handleSubmitPhone = formPhone.handleSubmit((data) => {
     const phone = data.phone.replace(/\D/g, '');
@@ -47,6 +52,8 @@ const Auth = () => {
       {
         onSuccess: (resp) => {
           authTokenStorage.set(resp.data.token);
+          userTokenStorage.set(resp.data.user);
+          navigate('/');
         },
         onError: () => toast.error('Не удалось авторизоваться')
       }
