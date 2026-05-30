@@ -7,7 +7,7 @@ import type {
   CinemaControllerGetFilmScheduleResponse
 } from '../../types.gen';
 
-import { instance } from '../../instance.gen';
+import { instance } from '../../../../shared/axiosInstance';
 
 export type GetApiCinemaFilmByFilmIdScheduleRequestParams =
   AxiosRequestParams<CinemaControllerGetFilmScheduleData>;

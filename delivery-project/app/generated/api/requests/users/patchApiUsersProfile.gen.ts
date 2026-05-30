@@ -7,7 +7,7 @@ import type {
   UsersControllerUpdateProfileResponse
 } from '../../types.gen';
 
-import { instance } from '../../instance.gen';
+import { instance } from '../../../../shared/axiosInstance';
 
 export type PatchApiUsersProfileRequestParams =
   AxiosRequestParams<UsersControllerUpdateProfileData>;

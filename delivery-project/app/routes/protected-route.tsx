@@ -11,10 +11,10 @@ const ProtectedRoute = () => {
   }
 
   return (
-    <>
+    <div className='relative min-h-screen'>
       <Header />
       <Outlet />
-    </>
+    </div>
   );
 };
 

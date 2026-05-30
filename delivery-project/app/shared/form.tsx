@@ -1,21 +1,23 @@
 import type { ComponentProps, FormHTMLAttributes, ReactNode } from 'react';
-import type { UseFormReturn } from 'react-hook-form';
+import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
-import { Field, FieldDescription, FieldLabel } from './ui/field';
+import { Field, FieldDescription, FieldError, FieldLabel } from './ui/field';
 import { Input } from './ui/input';
 
-interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  form: UseFormReturn;
+interface FormProps<T extends FieldValues> extends Omit<
+  FormHTMLAttributes<HTMLFormElement>,
+  'onSubmit'
+> {
+  form: UseFormReturn<T>;
+  onSubmit: (values: T) => void;
 }
-
-export const Form = ({ form, ...other }: FormProps) => (
+export const Form = <T extends FieldValues>({ form, onSubmit, ...other }: FormProps<T>) => (
   <FormProvider {...form}>
-    <form {...other} />
+    <form {...other} onSubmit={form.handleSubmit(onSubmit)} />
   </FormProvider>
 );
-
 interface FormInputProps extends ComponentProps<'input'> {
   description?: ReactNode;
   label?: ReactNode;
@@ -34,6 +36,7 @@ export const FormInput = ({ label, description, name, ...other }: FormInputProps
           {description && (
             <FieldDescription>Your API key is encrypted and stored securely.</FieldDescription>
           )}
+          {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
         </Field>
       )}
       control={form.control}

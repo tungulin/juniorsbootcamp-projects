@@ -28,7 +28,6 @@ export * from './hooks/users/usePatchApiUsersProfileSuspenseQuery.gen';
 export * from './hooks/users/usePostApiUsersSigninMutation.gen';
 export * from './hooks/users/usePostApiUsersSigninQuery.gen';
 export * from './hooks/users/usePostApiUsersSigninSuspenseQuery.gen';
-export * from './instance.gen';
 export * from './requests/cinema/getApiCinemaFilmByFilmId.gen';
 export * from './requests/cinema/getApiCinemaFilmByFilmIdSchedule.gen';
 export * from './requests/cinema/getApiCinemaFilms.gen';

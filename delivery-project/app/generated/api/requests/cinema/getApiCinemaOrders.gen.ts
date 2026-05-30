@@ -7,7 +7,7 @@ import type {
   CinemaControllerGetCinemaOrdersResponse
 } from '../../types.gen';
 
-import { instance } from '../../instance.gen';
+import { instance } from '../../../../shared/axiosInstance';
 
 export type GetApiCinemaOrdersRequestParams =
   AxiosRequestParams<CinemaControllerGetCinemaOrdersData> | void;

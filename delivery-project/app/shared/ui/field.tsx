@@ -183,7 +183,7 @@ const FieldError = ({
 
   return (
     <div
-      className={cn('text-destructive text-sm font-normal', className)}
+      className={cn('text-destructive ml-2 text-xs font-normal', className)}
       data-slot='field-error'
       role='alert'
       {...props}

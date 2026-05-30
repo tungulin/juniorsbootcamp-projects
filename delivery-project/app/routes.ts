@@ -7,6 +7,7 @@ export default [
 
   layout('./routes/protected-route.tsx', [
     index('./routes/home.tsx'),
-    route('profile', './routes/profile.tsx')
+    route('profile', './routes/profile.tsx'),
+    route('history', './routes/history.tsx')
   ])
 ] satisfies RouteConfig;

@@ -4,7 +4,7 @@ import type { ApicraftAxiosResponse, AxiosRequestParams } from '@siberiacancode/
 
 import type { CinemaControllerGetFilmData, CinemaControllerGetFilmResponse } from '../../types.gen';
 
-import { instance } from '../../instance.gen';
+import { instance } from '../../../../shared/axiosInstance';
 
 export type GetApiCinemaFilmByFilmIdRequestParams = AxiosRequestParams<CinemaControllerGetFilmData>;
 
