@@ -8,7 +8,6 @@ export default apicraft([
       name: 'axios',
       runtimeInstancePath: './app/shared/axiosInstance'
     },
-    baseUrl: 'https://juniorsbootcamp.ru',
     nameBy: 'path',
     groupBy: 'tags',
     plugins: ['tanstack']
