@@ -6,14 +6,13 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { withMask } from 'use-mask-input';
 
+import { usePostApiAuthOtpMutation, usePostApiUsersSigninMutation } from '@/generated/api';
 import { Form, FormInput } from '@/shared/form';
 import { LogoIcon } from '@/shared/icons';
 import { useAuthTokenLocalStorage, useUserLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2, H3, P } from '@/shared/ui/typography';
-
-import { usePostApiAuthOtpMutation, usePostApiUsersSigninMutation } from '../../generated/api';
 
 const Auth = () => {
   const [isSendingPhone, togglIsSendingPhone] = useBoolean(true);

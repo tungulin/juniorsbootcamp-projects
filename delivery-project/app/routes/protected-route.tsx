@@ -1,14 +1,13 @@
-import { Navigate, Outlet, useLocation } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 
 import { Header } from '../layout/header';
+import { useAuth } from '../shared/hooks/useAuth';
 
 const ProtectedRoute = () => {
-  //   const { isAuthenticated } = useAuth();
-  const isAuthenticated = true;
-  const location = useLocation();
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
-    return <Navigate replace state={{ from: location }} to='/auth' />;
+    return <Navigate replace to='/auth' />;
   }
 
   return (

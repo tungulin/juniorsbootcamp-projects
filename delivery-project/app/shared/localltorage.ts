@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@siberiacancode/reactuse';
 
-import type { User } from '../../generated/api';
+import type { User } from '@/generated/api';
 
 const PREFIX = 'jbp-projects';
 

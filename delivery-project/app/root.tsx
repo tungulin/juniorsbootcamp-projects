@@ -10,7 +10,7 @@ import { Toaster } from 'sonner';
 
 import type { Route } from './+types/root';
 
-import { Provider } from './provider';
+import { Provider } from './contexts/provider';
 
 import './app.css';
 

@@ -9,7 +9,8 @@
     "paths": {
       "@/*": ["./app/*"],
       "@/shared/ui/*": ["./app/shared/ui/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "@/api/*": ["./app/generated/api/*"]
     },
     "resolveJsonModule": true,
     "types": ["node", "vite/client"],

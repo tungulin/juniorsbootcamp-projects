@@ -1,1 +1,1 @@
-export const useAuth = () => {};
+export { useAuthContext as useAuth } from '@/contexts/auth-provider';

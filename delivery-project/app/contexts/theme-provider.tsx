@@ -1,0 +1,62 @@
+import type { PropsWithChildren } from 'react';
+
+import {
+  getCookie,
+  setCookie,
+  useHotkeys,
+  usePreferredColorScheme
+} from '@siberiacancode/reactuse';
+import { createContext, use, useLayoutEffect, useMemo, useState } from 'react';
+
+import { COOKIES } from '@/shared/const';
+
+export type Theme = 'dark' | 'light' | 'system';
+
+export interface ThemeContextValue {
+  value: Exclude<Theme, 'system'>;
+  set: (theme: Theme) => void;
+}
+
+const getTheme = (theme: Theme): 'dark' | 'light' => {
+  if (theme === 'system') {
+    if (typeof window === 'undefined') return 'light';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  return theme;
+};
+
+export const ThemeContext = createContext<ThemeContextValue>({
+  value: 'light',
+  set: () => {}
+});
+
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
+  const colorScheme = usePreferredColorScheme();
+
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'system';
+    return (getCookie(COOKIES.THEME) as Theme | undefined) ?? 'system';
+  });
+
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const activeTheme = getTheme(theme);
+
+    setCookie(COOKIES.THEME, theme, {
+      path: '/'
+    });
+
+    root.classList.remove('light', 'dark');
+    root.classList.add(activeTheme);
+  }, [theme, colorScheme]);
+
+  useHotkeys('shift+d', () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  });
+
+  const value = useMemo(() => ({ value: getTheme(theme), set: setTheme }), [theme]);
+
+  return <ThemeContext value={value}>{children}</ThemeContext>;
+};
+
+export const useTheme = () => use(ThemeContext);
