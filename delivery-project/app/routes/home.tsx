@@ -9,10 +9,10 @@ const Home = () => {
   const form = useForm();
 
   return (
-    <div className='mx-auto grid max-w-[75rem] grid-cols-2 gap-4'>
+    <div className='flex grid-cols-2 flex-col gap-4 px-5 md:grid lg:mx-auto lg:max-w-[75rem]'>
       <div className='rounded-3xl border p-8'>
         <H3 className='mb-6'>Рассчитать доставку</H3>
-        <div className=''>
+        <div>
           <Form className='flex flex-col gap-4' form={form}>
             <FormInput label='Город отправки' name='departure_city' />
             <FormInput label='Город назначения' name='destination city_city' />
@@ -22,7 +22,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className='rounded-3xl border'>
+      <div className='hidden rounded-3xl border md:block'>
         <img alt='' className='rounded-3xl' src='/home-deliver.png' />
       </div>
 

@@ -1,11 +1,6 @@
 import type { PropsWithChildren } from 'react';
 
-import {
-  getCookie,
-  setCookie,
-  useHotkeys,
-  usePreferredColorScheme
-} from '@siberiacancode/reactuse';
+import { getCookie, setCookie, usePreferredColorScheme } from '@siberiacancode/reactuse';
 import { createContext, use, useLayoutEffect, useMemo, useState } from 'react';
 
 import { COOKIES } from '@/shared/const';
@@ -49,10 +44,6 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     root.classList.remove('light', 'dark');
     root.classList.add(activeTheme);
   }, [theme, colorScheme]);
-
-  useHotkeys('shift+d', () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  });
 
   const value = useMemo(() => ({ value: getTheme(theme), set: setTheme }), [theme]);
 
