@@ -530,6 +530,1427 @@ export interface BaseResponse {
   success: boolean;
 }
 
+export interface DeliveryPoint {
+  /**
+   * Индентификатор пункта
+   */
+  id: string;
+  /**
+   * Широта
+   */
+  latitude: number;
+  /**
+   * Долгота
+   */
+  longitude: number;
+  /**
+   * Название пункта
+   */
+  name: string;
+}
+
+export interface DeliveryPointsResponse {
+  /**
+   * Пункты доставки
+   */
+  points: Array<DeliveryPoint>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface DeliveryPackageType {
+  /**
+   * Высота посылки
+   */
+  height: number;
+  /**
+   * Индентификатор типа посылки
+   */
+  id: string;
+  /**
+   * Длина посылки
+   */
+  length: number;
+  /**
+   * Название типа посылки
+   */
+  name: string;
+  /**
+   * Длина посылки
+   */
+  weight: number;
+  /**
+   * Ширина посылки
+   */
+  width: number;
+}
+
+export interface DeliveryPackageTypesResponse {
+  /**
+   * Типы
+   */
+  packages: Array<DeliveryPackageType>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CalculateDeliveryPackageDto {
+  /**
+   * Высота посылки
+   */
+  height: number;
+  /**
+   * Длина посылки
+   */
+  length: number;
+  /**
+   * Длина посылки
+   */
+  weight: number;
+  /**
+   * Ширина посылки
+   */
+  width: number;
+}
+
+export interface CalculateDeliveryPointDto {
+  /**
+   * Широта
+   */
+  latitude: number;
+  /**
+   * Долгота
+   */
+  longitude: number;
+}
+
+export interface CalculateDeliveryDto {
+  /**
+   * Поссылка
+   */
+  package: CalculateDeliveryPackageDto;
+  /**
+   * Город получения
+   */
+  receiverPoint: CalculateDeliveryPointDto;
+  /**
+   * Город отправки
+   */
+  senderPoint: CalculateDeliveryPointDto;
+}
+
+export interface DeliveryOption {
+  /**
+   * Количество дней доставки
+   */
+  days: number;
+  /**
+   * Индентификатор опции доставки
+   */
+  id: string;
+  /**
+   * Название опции отправки
+   */
+  name: string;
+  /**
+   * Цена доставки в копейках
+   */
+  price: number;
+  /**
+   * Тип доставки
+   */
+  type: 'DEFAULT' | 'EXPRESS';
+}
+
+export interface CalculateDeliveryResponse {
+  /**
+   * Опции доставки
+   */
+  options: Array<DeliveryOption>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CreateDeliveryOrderSenderAddressDto {
+  /**
+   * Номер квартиры
+   */
+  apartment: string;
+  /**
+   * Комментарий
+   */
+  comment?: string;
+  /**
+   * Номер дома
+   */
+  house: string;
+  /**
+   * Улица
+   */
+  street: string;
+}
+
+export interface CreateDeliveryOrderPersonDto {
+  /**
+   * Имя
+   */
+  firstname: string;
+  /**
+   * Фамилия
+   */
+  lastname: string;
+  /**
+   * Отчество
+   */
+  middlename?: string;
+  /**
+   * Телефон
+   */
+  phone: string;
+}
+
+export interface CreateDeliveryOrderReceiverAddressDto {
+  /**
+   * Номер квартиры
+   */
+  apartment: string;
+  /**
+   * Комментарий
+   */
+  comment?: string;
+  /**
+   * Номер дома
+   */
+  house: string;
+  /**
+   * Бесконтактная доставка
+   */
+  isNonContact?: boolean;
+  /**
+   * Улица
+   */
+  street: string;
+}
+
+export interface CreateDeliveryOrderDto {
+  /**
+   * Тип заказа
+   */
+  optionType: 'DEFAULT' | 'EXPRESS';
+  /**
+   * Идентификатор типа посылки
+   */
+  packageId: string;
+  /**
+   * Кто будет оплачивать
+   */
+  payer: 'RECEIVER' | 'SENDER';
+  /**
+   * Получатель
+   */
+  receiver: CreateDeliveryOrderPersonDto;
+  /**
+   * Адрес получателя
+   */
+  receiverAddress: CreateDeliveryOrderReceiverAddressDto;
+  /**
+   * Идентификатор города получения
+   */
+  receiverPointId: string;
+  /**
+   * Отправитель
+   */
+  sender: CreateDeliveryOrderPersonDto;
+  /**
+   * Адрес отправителя
+   */
+  senderAddress: CreateDeliveryOrderSenderAddressDto;
+  /**
+   * Идентификатор города отправки
+   */
+  senderPointId: string;
+}
+
+export interface DeliverySenderAddress {
+  /**
+   * Номер квартиры
+   */
+  apartment: string;
+  /**
+   * Комментарий
+   */
+  comment: string;
+  /**
+   * Номер дома
+   */
+  house: string;
+  /**
+   * Улица
+   */
+  street: string;
+}
+
+export interface DeliveryPerson {
+  /**
+   * Имя
+   */
+  firstname: string;
+  /**
+   * Фамилия
+   */
+  lastname: string;
+  /**
+   * Отчество
+   */
+  middlename: string;
+  /**
+   * Телефон
+   */
+  phone: string;
+}
+
+export interface DeliveryReceiverAddress {
+  /**
+   * Номер квартиры
+   */
+  apartment: string;
+  /**
+   * Комментарий
+   */
+  comment: string;
+  /**
+   * Номер дома
+   */
+  house: string;
+  /**
+   * Бесконтактная доставка
+   */
+  isNonContact?: boolean;
+  /**
+   * Улица
+   */
+  street: string;
+}
+
+export interface DeliveryOrder {
+  /**
+   * ID заказа
+   */
+  _id: string;
+  /**
+   * Статус отмены
+   */
+  cancellable: boolean;
+  /**
+   * Тип доставки
+   */
+  option: 'DEFAULT' | 'EXPRESS';
+  /**
+   * Тип посылки
+   */
+  package: DeliveryPackageType;
+  /**
+   * Кто будет оплачивать
+   */
+  payer: 'RECEIVER' | 'SENDER';
+  /**
+   * Цена доставки
+   */
+  price: number;
+  /**
+   * Получатель
+   */
+  receiver: DeliveryPerson;
+  /**
+   * Адрес получателя
+   */
+  receiverAddress: DeliveryReceiverAddress;
+  /**
+   * Город получения
+   */
+  receiverPoint: DeliveryPoint;
+  /**
+   * Отправитель
+   */
+  sender: DeliveryPerson;
+  /**
+   * Адрес отправителя
+   */
+  senderAddress: DeliverySenderAddress;
+  /**
+   * Город отправки
+   */
+  senderPoint: DeliveryPoint;
+  /**
+   * Статус доставки
+   */
+  status: 0 | 1 | 2 | 3 | 4;
+}
+
+export interface DeliverResponse {
+  /**
+   * Доставка
+   */
+  order: DeliveryOrder;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface DeliveryOrdersResponse {
+  /**
+   * Доставки
+   */
+  orders: Array<DeliveryOrder>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface DeliveryOrderResponse {
+  /**
+   * Доставка
+   */
+  order: DeliveryOrder;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CancelDeliveryOrderDto {
+  /**
+   * Идентификатор доставки
+   */
+  orderId: string;
+}
+
+export interface Media {
+  isCover: boolean;
+  url: string;
+}
+
+export interface Car {
+  /**
+   * Тип кузова
+   */
+  bodyType: 'cabriolet' | 'coupe' | 'hatchback' | 'sedan' | 'suv';
+  /**
+   * Марка автомобиля
+   */
+  brand:
+    | 'Garden car'
+    | 'Geely'
+    | 'Grocery cart'
+    | 'Haier'
+    | 'Haval'
+    | 'Hyundai'
+    | 'Invalid'
+    | 'Kia'
+    | 'Mercedes'
+    | 'Volkswagen';
+  /**
+   * Цвет автомобиля
+   */
+  color: 'black' | 'blue' | 'grey' | 'orange' | 'red' | 'silver' | 'white';
+  /**
+   * ID автомобиля
+   */
+  id: string;
+  /**
+   * Местоположение
+   */
+  location: string;
+  media: Array<Media>;
+  /**
+   * Название модели
+   */
+  name: string;
+  /**
+   * Цена аренды в сутки
+   */
+  price: number;
+  /**
+   * Расположение руля
+   */
+  steering: 'left' | 'right';
+  /**
+   * Тип коробки передач
+   */
+  transmission: 'automatic' | 'manual';
+}
+
+export interface CarsPaginationMeta {
+  /**
+   * Количество элементов на странице (по умолчанию 10)
+   */
+  limit: number;
+  /**
+   * Текущий номер страницы (по умолчанию 1)
+   */
+  page: number;
+  /**
+   * Общее количество элементов во всех страницах
+   */
+  total: number;
+  /**
+   * Общее количество доступных страниц
+   */
+  totalPages: number;
+}
+
+export interface CarsPaginatedResponse {
+  /**
+   * Массив автомобилей с информацией
+   */
+  data: Array<Car>;
+  /**
+   * Метаданные пагинации (общее количество, текущая страница и т.д.)
+   */
+  meta: CarsPaginationMeta;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface BookedDateRange {
+  /**
+   * Дата окончания аренды (timestamp)
+   */
+  endDate: number;
+  /**
+   * Дата начала аренды (timestamp)
+   */
+  startDate: number;
+}
+
+export interface CarWithRents {
+  /**
+   * Тип кузова
+   */
+  bodyType: 'cabriolet' | 'coupe' | 'hatchback' | 'sedan' | 'suv';
+  /**
+   * Марка автомобиля
+   */
+  brand:
+    | 'Garden car'
+    | 'Geely'
+    | 'Grocery cart'
+    | 'Haier'
+    | 'Haval'
+    | 'Hyundai'
+    | 'Invalid'
+    | 'Kia'
+    | 'Mercedes'
+    | 'Volkswagen';
+  /**
+   * Цвет автомобиля
+   */
+  color: 'black' | 'blue' | 'grey' | 'orange' | 'red' | 'silver' | 'white';
+  /**
+   * ID автомобиля
+   */
+  id: string;
+  /**
+   * Местоположение
+   */
+  location: string;
+  media: Array<Media>;
+  /**
+   * Название модели
+   */
+  name: string;
+  /**
+   * Цена аренды в сутки
+   */
+  price: number;
+  /**
+   * Занятые промежутки дат (timestamp)
+   */
+  rents: Array<BookedDateRange>;
+  /**
+   * Расположение руля
+   */
+  steering: 'left' | 'right';
+  /**
+   * Тип коробки передач
+   */
+  transmission: 'automatic' | 'manual';
+}
+
+export interface CarResponse {
+  /**
+   * Данные автомобиля с арендованными датами
+   */
+  data: CarWithRents;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CreateRentDto {
+  /**
+   * Дата рождения арендатора (ISO формат)
+   */
+  birthDate: string;
+  /**
+   * Идентификатор автомобиля
+   */
+  carId: string;
+  /**
+   * Комментарий арендатора
+   */
+  comment?: string;
+  /**
+   * Email арендатора
+   */
+  email: string;
+  /**
+   * Дата окончания аренды (timestamp в миллисекундах)
+   */
+  endDate: number;
+  /**
+   * Имя арендатора
+   */
+  firstName: string;
+  /**
+   * Фамилия арендатора
+   */
+  lastName: string;
+  /**
+   * Отчество арендатора
+   */
+  middleName?: string;
+  /**
+   * Телефон арендатора в формате 7XXXXXXXXXX
+   */
+  phone: string;
+  /**
+   * Место получения автомобиля
+   */
+  pickupLocation: string;
+  /**
+   * Место возврата автомобиля
+   */
+  returnLocation: string;
+  /**
+   * Дата начала аренды (timestamp в миллисекундах)
+   */
+  startDate: number;
+}
+
+export interface CarRent {
+  /**
+   * ID заказа
+   */
+  _id: string;
+  /**
+   * Дата рождения арендатора
+   */
+  birthDate: string;
+  /**
+   * Информация об автомобиле
+   */
+  carInfo: Car;
+  /**
+   * Комментарий
+   */
+  comment?: string;
+  /**
+   * Email арендатора
+   */
+  email: string;
+  /**
+   * Дата окончания аренды (timestamp в миллисекундах)
+   */
+  endDate: number;
+  /**
+   * Имя арендатора
+   */
+  firstName: string;
+  /**
+   * Фамилия арендатора
+   */
+  lastName: string;
+  /**
+   * Отчество арендатора
+   */
+  middleName?: string;
+  /**
+   * Телефон арендатора (совпадает с номером пользователя)
+   */
+  phone: string;
+  /**
+   * Место получения автомобиля
+   */
+  pickupLocation: string;
+  /**
+   * Место возврата автомобиля
+   */
+  returnLocation: string;
+  /**
+   * Дата начала аренды (timestamp в миллисекундах)
+   */
+  startDate: number;
+  /**
+   * Статус брони
+   */
+  status: 0 | 1;
+  /**
+   * Общая сумма аренды
+   */
+  totalPrice: number;
+}
+
+export interface CarRentResponse {
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Аренда
+   */
+  rent: CarRent;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CarRentsResponse {
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Аренды
+   */
+  rents: Array<CarRent>;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CancelCarRentDto {
+  /**
+   * Идентификатор аренды
+   */
+  carRentId: string;
+}
+
+export interface Game {
+  /**
+   * Описание игры
+   */
+  description: string;
+  /**
+   * Внешний ID (Steam/KupiKod)
+   */
+  externalId: string;
+  /**
+   * Жанры игры
+   */
+  genres: Array<
+    | 'action'
+    | 'adventure'
+    | 'horror'
+    | 'indie'
+    | 'racing'
+    | 'rpg'
+    | 'shooter'
+    | 'simulation'
+    | 'sports'
+    | 'strategy'
+    | 'survival'
+  >;
+  /**
+   * ID игры
+   */
+  id: string;
+  /**
+   * Изображение игры
+   */
+  image: string;
+  /**
+   * Название игры
+   */
+  name: string;
+  /**
+   * Старая цена
+   */
+  oldPrice?: number;
+  /**
+   * Текущая цена
+   */
+  price: number;
+  /**
+   * Рейтинг положительных отзывов
+   */
+  rating?: number;
+  /**
+   * Slug игры
+   */
+  slug: string;
+  /**
+   * Год релиза
+   */
+  year: number;
+}
+
+export interface GamesPaginationMeta {
+  /**
+   * Элементов на странице
+   */
+  limit: number;
+  /**
+   * Текущая страница
+   */
+  page: number;
+  /**
+   * Общее количество элементов
+   */
+  total: number;
+  /**
+   * Количество страниц
+   */
+  totalPages: number;
+}
+
+export interface GamesPaginatedResponse {
+  /**
+   * Список игр
+   */
+  data: Array<Game>;
+  /**
+   * Пагинация
+   */
+  meta: GamesPaginationMeta;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface GameSearchResponse {
+  /**
+   * Результаты поиска игр
+   */
+  data: Array<Game>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface GameResponse {
+  /**
+   * Игра
+   */
+  data: Game;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CreateGameOrderPersonDto {
+  /**
+   * Email пользователя
+   */
+  email?: string;
+  /**
+   * Имя пользователя
+   */
+  firstName: string;
+  /**
+   * Фамилия пользователя
+   */
+  lastName: string;
+  /**
+   * Отчество пользователя
+   */
+  middleName?: string;
+  /**
+   * Телефон пользователя
+   */
+  phone: string;
+}
+
+export interface CreateGameOrderDto {
+  /**
+   * Дебетовая карта для оплаты
+   */
+  debitCard: string;
+  /**
+   * ID игры для покупки
+   */
+  gameId: string;
+  /**
+   * Данные покупателя
+   */
+  person: CreateGameOrderPersonDto;
+}
+
+export interface GameOrderPerson {
+  /**
+   * Email
+   */
+  email?: string;
+  /**
+   * Имя
+   */
+  firstName: string;
+  /**
+   * Фамилия
+   */
+  lastName: string;
+  /**
+   * Отчество
+   */
+  middleName?: string;
+  /**
+   * Телефон
+   */
+  phone: string;
+}
+
+export interface GameOrderSnapshot {
+  /**
+   * Внешний ID
+   */
+  externalId: string;
+  /**
+   * ID игры
+   */
+  gameId: string;
+  /**
+   * Картинка игры
+   */
+  image: string;
+  /**
+   * Название игры
+   */
+  name: string;
+  /**
+   * Цена на момент заказа
+   */
+  price: number;
+}
+
+export interface GameOrder {
+  /**
+   * ID заказа
+   */
+  _id: string;
+  /**
+   * Сгенерированный игровой ключ
+   */
+  gameKey: string;
+  /**
+   * Снимок игры на момент заказа
+   */
+  gameSnapshot: GameOrderSnapshot;
+  /**
+   * Данные покупателя
+   */
+  person: GameOrderPerson;
+  /**
+   * Статус заказа
+   */
+  status: 'canceled' | 'paid';
+}
+
+export interface CreateGameOrderResponse {
+  /**
+   * Заказ на игру
+   */
+  order: GameOrder;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface GameOrdersResponse {
+  /**
+   * Заказы пользователя
+   */
+  orders: Array<GameOrder>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface GameOrderResponse {
+  /**
+   * Заказ
+   */
+  order: GameOrder;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface PizzaIngredient {
+  /**
+   * Изображение ингредиента
+   */
+  img: string;
+  /**
+   * Цена ингредиента
+   */
+  price: number;
+  /**
+   * Идентификатор ингредиента
+   */
+  type:
+    | 'BACON'
+    | 'BASIL'
+    | 'CHEDDAR'
+    | 'CHICKEN_FILLET'
+    | 'CHILE'
+    | 'FETA'
+    | 'GREEN_PEPPER'
+    | 'HAM'
+    | 'MEATBALLS'
+    | 'MOZZARELLA'
+    | 'MUSHROOMS'
+    | 'ONION'
+    | 'PARMESAN'
+    | 'PEPERONI'
+    | 'PICKLE'
+    | 'PINEAPPLE'
+    | 'SHRIMPS'
+    | 'TOMATO';
+}
+
+export interface PizzaSize {
+  /**
+   * Цена пиццы
+   */
+  price: number;
+  /**
+   * Идентификатор размера пиццы
+   */
+  type: 'LARGE' | 'MEDIUM' | 'SMALL';
+}
+
+export interface PizzaDough {
+  /**
+   * Цена теста
+   */
+  price: number;
+  /**
+   * Идентификатор типа теста
+   */
+  type: 'THICK' | 'THIN';
+}
+
+export interface Pizza {
+  /**
+   * Список аллергенов
+   */
+  allergens: Array<string>;
+  /**
+   * Количество калорий
+   */
+  calories: number;
+  /**
+   * Количество углеводов
+   */
+  carbohydrates: string;
+  /**
+   * Описание пиццы
+   */
+  description: string;
+  /**
+   * Тип теста
+   */
+  doughs: Array<PizzaDough>;
+  /**
+   * Идентификатор пиццы
+   */
+  id: string;
+  /**
+   * Изображение пиццы
+   */
+  img: string;
+  /**
+   * Ингредиенты
+   */
+  ingredients: Array<PizzaIngredient>;
+  /**
+   * Наличие глютена
+   */
+  isGlutenFree: boolean;
+  /**
+   * Хит
+   */
+  isHit: boolean;
+  /**
+   * Новинка
+   */
+  isNew: boolean;
+  /**
+   * Для вегетарианцев
+   */
+  isVegetarian: boolean;
+  /**
+   * Название пиццы
+   */
+  name: string;
+  /**
+   * Количество белков
+   */
+  protein: string;
+  /**
+   * Размеры пиццы
+   */
+  sizes: Array<PizzaSize>;
+  /**
+   * Количество натрия
+   */
+  sodium: string;
+  /**
+   * Топпинги
+   */
+  toppings: Array<PizzaIngredient>;
+  /**
+   * Количество жиров
+   */
+  totalFat: string;
+}
+
+export interface PizzasResponse {
+  /**
+   * Пиццы
+   */
+  catalog: Array<Pizza>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CreatePizzaPaymentAddressDto {
+  /**
+   * Номер квартиры
+   */
+  apartment: string;
+  /**
+   * Комментарий
+   */
+  comment?: string;
+  /**
+   * Номер дома
+   */
+  house: string;
+  /**
+   * Улица
+   */
+  street: string;
+}
+
+export interface CreatePizzaPaymentPersonDto {
+  /**
+   * Имя
+   */
+  firstname: string;
+  /**
+   * Фамилия
+   */
+  lastname: string;
+  /**
+   * Отчество
+   */
+  middlename?: string;
+  /**
+   * Телефон
+   */
+  phone: string;
+}
+
+export interface CreatePizzaPaymentDebitCardDto {
+  /**
+   * Код карты
+   */
+  cvv: string;
+  /**
+   * Срок действие карты
+   */
+  expireDate: string;
+  /**
+   * Номер карты
+   */
+  pan: string;
+}
+
+/**
+ * Топпинги
+ */
+export type Ingredient =
+  | 'BACON'
+  | 'BASIL'
+  | 'CHEDDAR'
+  | 'CHICKEN_FILLET'
+  | 'CHILE'
+  | 'FETA'
+  | 'GREEN_PEPPER'
+  | 'HAM'
+  | 'MEATBALLS'
+  | 'MOZZARELLA'
+  | 'MUSHROOMS'
+  | 'ONION'
+  | 'PARMESAN'
+  | 'PEPERONI'
+  | 'PICKLE'
+  | 'PINEAPPLE'
+  | 'SHRIMPS'
+  | 'TOMATO';
+
+export interface OrderedPizza {
+  /**
+   * Тип теста
+   */
+  dough: 'THICK' | 'THIN';
+  /**
+   * Идентификатор пиццы
+   */
+  id: string;
+  /**
+   * Размер пиццы
+   */
+  size: 'LARGE' | 'MEDIUM' | 'SMALL';
+  /**
+   * Топпинги
+   */
+  toppings: Array<Ingredient>;
+}
+
+export interface CreatePizzaPaymentDto {
+  /**
+   * Банковская карта
+   */
+  debitCard: CreatePizzaPaymentDebitCardDto;
+  /**
+   * Данные пользователя
+   */
+  person: CreatePizzaPaymentPersonDto;
+  /**
+   * Пиццы
+   */
+  pizzas: Array<OrderedPizza>;
+  /**
+   * Адрес доставки
+   */
+  receiverAddress: CreatePizzaPaymentAddressDto;
+}
+
+export interface PizzaPerson {
+  /**
+   * Имя
+   */
+  firstname: string;
+  /**
+   * Фамилия
+   */
+  lastname: string;
+  /**
+   * Отчество
+   */
+  middlename: string;
+  /**
+   * Телефон
+   */
+  phone: string;
+}
+
+export interface PizzaAddress {
+  /**
+   * Номер квартиры
+   */
+  apartment: string;
+  /**
+   * Комментарий
+   */
+  comment: string;
+  /**
+   * Номер дома
+   */
+  house: string;
+  /**
+   * Улица
+   */
+  street: string;
+}
+
+export interface PizzaOrder {
+  /**
+   * ID заказа
+   */
+  _id: string;
+  /**
+   * Статус отмены
+   */
+  cancellable: boolean;
+  /**
+   * Данные пользователя
+   */
+  person: PizzaPerson;
+  /**
+   * Пиццы
+   */
+  pizzas: Array<Pizza>;
+  /**
+   * Адрес доставки
+   */
+  receiverAddress: PizzaAddress;
+  /**
+   * Статус доставки
+   */
+  status: 0 | 1 | 2 | 3 | 4;
+  /**
+   * Сумма заказа
+   */
+  totalPrice: number;
+}
+
+export interface PizzaPaymentResponse {
+  /**
+   * Доставка
+   */
+  order: PizzaOrder;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface PizzaOrdersResponse {
+  /**
+   * Доставки
+   */
+  orders: Array<PizzaOrder>;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface PizzaOrderResponse {
+  /**
+   * Доставки
+   */
+  order: PizzaOrder;
+  /**
+   * Причина ошибки
+   */
+  reason?: string;
+  /**
+   * Статус запроса
+   */
+  success: boolean;
+}
+
+export interface CancelPizzaOrderDto {
+  /**
+   * Идентификатор заказа
+   */
+  orderId: string;
+}
+
+export interface AppControllerOtpsData {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: '/api/otps';
+}
+
+export interface AppControllerOtpsResponses {
+  200: unknown;
+}
+
 export interface OtpsControllerCreateOtpData {
   body: CreateOtpDto;
   path?: never;
@@ -721,6 +2142,533 @@ export interface CinemaControllerCancelCinemaOrderResponses {
 
 export type CinemaControllerCancelCinemaOrderResponse =
   CinemaControllerCancelCinemaOrderResponses[keyof CinemaControllerCancelCinemaOrderResponses];
+
+export interface DeliveryControllerGetPointsData {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: '/api/delivery/points';
+}
+
+export interface DeliveryControllerGetPointsResponses {
+  /**
+   * points
+   */
+  200: DeliveryPointsResponse;
+}
+
+export type DeliveryControllerGetPointsResponse =
+  DeliveryControllerGetPointsResponses[keyof DeliveryControllerGetPointsResponses];
+
+export interface DeliveryControllerGetPackageTypesData {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: '/api/delivery/package/types';
+}
+
+export interface DeliveryControllerGetPackageTypesResponses {
+  /**
+   * package types
+   */
+  200: DeliveryPackageTypesResponse;
+}
+
+export type DeliveryControllerGetPackageTypesResponse =
+  DeliveryControllerGetPackageTypesResponses[keyof DeliveryControllerGetPackageTypesResponses];
+
+export interface DeliveryControllerCalculateDeliveryData {
+  body: CalculateDeliveryDto;
+  path?: never;
+  query?: never;
+  url: '/api/delivery/calc';
+}
+
+export interface DeliveryControllerCalculateDeliveryResponses {
+  /**
+   * calc
+   */
+  200: CalculateDeliveryResponse;
+}
+
+export type DeliveryControllerCalculateDeliveryResponse =
+  DeliveryControllerCalculateDeliveryResponses[keyof DeliveryControllerCalculateDeliveryResponses];
+
+export interface DeliveryControllerCreateOrderData {
+  body: CreateDeliveryOrderDto;
+  path?: never;
+  query?: never;
+  url: '/api/delivery/order';
+}
+
+export interface DeliveryControllerCreateOrderResponses {
+  /**
+   * order
+   */
+  200: DeliverResponse;
+}
+
+export type DeliveryControllerCreateOrderResponse =
+  DeliveryControllerCreateOrderResponses[keyof DeliveryControllerCreateOrderResponses];
+
+export interface DeliveryControllerGetDeliveriesData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/delivery/orders';
+}
+
+export interface DeliveryControllerGetDeliveriesResponses {
+  /**
+   * orders
+   */
+  200: DeliveryOrdersResponse;
+}
+
+export type DeliveryControllerGetDeliveriesResponse =
+  DeliveryControllerGetDeliveriesResponses[keyof DeliveryControllerGetDeliveriesResponses];
+
+export interface DeliveryControllerGetDeliveryData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path: {
+    /**
+     * Идентификатор доставки
+     */
+    orderId: string;
+  };
+  query?: never;
+  url: '/api/delivery/orders/{orderId}';
+}
+
+export interface DeliveryControllerGetDeliveryResponses {
+  /**
+   * order
+   */
+  200: DeliveryOrderResponse;
+}
+
+export type DeliveryControllerGetDeliveryResponse =
+  DeliveryControllerGetDeliveryResponses[keyof DeliveryControllerGetDeliveryResponses];
+
+export interface DeliveryControllerCancelDeliveryOrderData {
+  body: CancelDeliveryOrderDto;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/delivery/orders/cancel';
+}
+
+export interface DeliveryControllerCancelDeliveryOrderResponses {
+  /**
+   * order cancel
+   */
+  200: BaseResponse;
+}
+
+export type DeliveryControllerCancelDeliveryOrderResponse =
+  DeliveryControllerCancelDeliveryOrderResponses[keyof DeliveryControllerCancelDeliveryOrderResponses];
+
+export interface CarsControllerGetCarsData {
+  body?: never;
+  path?: never;
+  query?: {
+    /**
+     * Поиск
+     */
+    search?: string;
+    /**
+     * Максимальная цена аренды
+     */
+    maxPrice?: number;
+    /**
+     * Минимальная цена аренды
+     */
+    minPrice?: number;
+    /**
+     * Тип трансмиссии
+     */
+    transmission?: 'automatic' | 'manual';
+    /**
+     * Тип кузова автомобиля
+     */
+    bodyType?: 'cabriolet' | 'coupe' | 'hatchback' | 'sedan' | 'suv';
+    /**
+     * Марка автомобиля
+     */
+    brand?:
+      | 'Garden car'
+      | 'Geely'
+      | 'Grocery cart'
+      | 'Haier'
+      | 'Haval'
+      | 'Hyundai'
+      | 'Invalid'
+      | 'Kia'
+      | 'Mercedes'
+      | 'Volkswagen';
+    /**
+     * Цвет автомобиля
+     */
+    color?: 'black' | 'blue' | 'grey' | 'orange' | 'red' | 'silver' | 'white';
+    /**
+     * Количество элементов на странице (по умолчанию 10)
+     */
+    limit?: number;
+    /**
+     * Номер текущей страницы (по умолчанию 1)
+     */
+    page?: number;
+  };
+  url: '/api/cars/info';
+}
+
+export interface CarsControllerGetCarsResponses {
+  200: CarsPaginatedResponse;
+}
+
+export type CarsControllerGetCarsResponse =
+  CarsControllerGetCarsResponses[keyof CarsControllerGetCarsResponses];
+
+export interface CarsControllerGetCarData {
+  body?: never;
+  path: {
+    /**
+     * Идентификатор автомобиля
+     */
+    carId: string;
+  };
+  query?: never;
+  url: '/api/cars/info/{carId}';
+}
+
+export interface CarsControllerGetCarResponses {
+  /**
+   * car with rents
+   */
+  200: CarResponse;
+}
+
+export type CarsControllerGetCarResponse =
+  CarsControllerGetCarResponses[keyof CarsControllerGetCarResponses];
+
+export interface CarsControllerGetCarRentsData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/cars/rent';
+}
+
+export interface CarsControllerGetCarRentsResponses {
+  /**
+   * rents
+   */
+  200: CarRentsResponse;
+}
+
+export type CarsControllerGetCarRentsResponse =
+  CarsControllerGetCarRentsResponses[keyof CarsControllerGetCarRentsResponses];
+
+export interface CarsControllerCreateCarRentData {
+  body: CreateRentDto;
+  path?: never;
+  query?: never;
+  url: '/api/cars/rent';
+}
+
+export interface CarsControllerCreateCarRentResponses {
+  /**
+   * create rent
+   */
+  200: CarRentResponse;
+}
+
+export type CarsControllerCreateCarRentResponse =
+  CarsControllerCreateCarRentResponses[keyof CarsControllerCreateCarRentResponses];
+
+export interface CarsControllerGetCarRentData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path: {
+    /**
+     * Идентификатор аренды
+     */
+    carRentId: string;
+  };
+  query?: never;
+  url: '/api/cars/rent/{carRentId}';
+}
+
+export interface CarsControllerGetCarRentResponses {
+  /**
+   * rent
+   */
+  200: CarRent;
+}
+
+export type CarsControllerGetCarRentResponse =
+  CarsControllerGetCarRentResponses[keyof CarsControllerGetCarRentResponses];
+
+export interface CarsControllerCancelCarRentData {
+  body: CancelCarRentDto;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/cars/rent/cancel';
+}
+
+export interface CarsControllerCancelCarRentResponses {
+  /**
+   * rent cancel
+   */
+  200: BaseResponse;
+}
+
+export type CarsControllerCancelCarRentResponse =
+  CarsControllerCancelCarRentResponses[keyof CarsControllerCancelCarRentResponses];
+
+export interface GamesControllerGetGamesData {
+  body?: never;
+  path?: never;
+  query?: {
+    /**
+     * Год релиза
+     */
+    year?: Array<number>;
+    /**
+     * Жанр
+     */
+    genre?: Array<'action'>;
+    /**
+     * Поиск
+     */
+    search?: string;
+    /**
+     * Страница
+     */
+    page?: number;
+    /**
+     * Лимит
+     */
+    limit?: number;
+  };
+  url: '/api/games/info';
+}
+
+export interface GamesControllerGetGamesResponses {
+  200: GamesPaginatedResponse;
+}
+
+export type GamesControllerGetGamesResponse =
+  GamesControllerGetGamesResponses[keyof GamesControllerGetGamesResponses];
+
+export interface GamesControllerSearchGamesData {
+  body?: never;
+  path?: never;
+  query: {
+    /**
+     * Строка поиска
+     */
+    search: string;
+    /**
+     * Лимит
+     */
+    limit?: number;
+  };
+  url: '/api/games/search';
+}
+
+export interface GamesControllerSearchGamesResponses {
+  200: GameSearchResponse;
+}
+
+export type GamesControllerSearchGamesResponse =
+  GamesControllerSearchGamesResponses[keyof GamesControllerSearchGamesResponses];
+
+export interface GamesControllerGetGameData {
+  body?: never;
+  path: {
+    /**
+     * ID игры
+     */
+    gameId: string;
+  };
+  query?: never;
+  url: '/api/games/info/{gameId}';
+}
+
+export interface GamesControllerGetGameResponses {
+  200: GameResponse;
+}
+
+export type GamesControllerGetGameResponse =
+  GamesControllerGetGameResponses[keyof GamesControllerGetGameResponses];
+
+export interface GamesControllerBuyGameData {
+  body: CreateGameOrderDto;
+  path?: never;
+  query?: never;
+  url: '/api/games/order';
+}
+
+export interface GamesControllerBuyGameResponses {
+  200: CreateGameOrderResponse;
+}
+
+export type GamesControllerBuyGameResponse =
+  GamesControllerBuyGameResponses[keyof GamesControllerBuyGameResponses];
+
+export interface GamesControllerGetGameOrdersData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/games/orders';
+}
+
+export interface GamesControllerGetGameOrdersResponses {
+  200: GameOrdersResponse;
+}
+
+export type GamesControllerGetGameOrdersResponse =
+  GamesControllerGetGameOrdersResponses[keyof GamesControllerGetGameOrdersResponses];
+
+export interface GamesControllerGetGameOrderData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path: {
+    /**
+     * ID заказа
+     */
+    orderId: string;
+  };
+  query?: never;
+  url: '/api/games/orders/{orderId}';
+}
+
+export interface GamesControllerGetGameOrderResponses {
+  200: GameOrderResponse;
+}
+
+export type GamesControllerGetGameOrderResponse =
+  GamesControllerGetGameOrderResponses[keyof GamesControllerGetGameOrderResponses];
+
+export interface PizzaControllerGetPizzasCatalogData {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: '/api/pizza/catalog';
+}
+
+export interface PizzaControllerGetPizzasCatalogResponses {
+  /**
+   * catalog
+   */
+  200: PizzasResponse;
+}
+
+export type PizzaControllerGetPizzasCatalogResponse =
+  PizzaControllerGetPizzasCatalogResponses[keyof PizzaControllerGetPizzasCatalogResponses];
+
+export interface PizzaControllerCreatePizzaPaymentData {
+  body: CreatePizzaPaymentDto;
+  path?: never;
+  query?: never;
+  url: '/api/pizza/payment';
+}
+
+export interface PizzaControllerCreatePizzaPaymentResponses {
+  /**
+   * payment
+   */
+  200: PizzaPaymentResponse;
+}
+
+export type PizzaControllerCreatePizzaPaymentResponse =
+  PizzaControllerCreatePizzaPaymentResponses[keyof PizzaControllerCreatePizzaPaymentResponses];
+
+export interface PizzaControllerGetPizzaOrdersData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/pizza/orders';
+}
+
+export interface PizzaControllerGetPizzaOrdersResponses {
+  /**
+   * orders
+   */
+  200: PizzaOrdersResponse;
+}
+
+export type PizzaControllerGetPizzaOrdersResponse =
+  PizzaControllerGetPizzaOrdersResponses[keyof PizzaControllerGetPizzaOrdersResponses];
+
+export interface PizzaControllerGetPizzaOrderData {
+  body?: never;
+  headers?: {
+    authorization?: string;
+  };
+  path: {
+    /**
+     * Идентификатор заказа
+     */
+    orderId: string;
+  };
+  query?: never;
+  url: '/api/pizza/orders/{orderId}';
+}
+
+export interface PizzaControllerGetPizzaOrderResponses {
+  /**
+   * order
+   */
+  200: PizzaOrderResponse;
+}
+
+export type PizzaControllerGetPizzaOrderResponse =
+  PizzaControllerGetPizzaOrderResponses[keyof PizzaControllerGetPizzaOrderResponses];
+
+export interface PizzaControllerCancelPizzaOrderData {
+  body: CancelPizzaOrderDto;
+  headers?: {
+    authorization?: string;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/pizza/orders/cancel';
+}
+
+export interface PizzaControllerCancelPizzaOrderResponses {
+  /**
+   * order cancel
+   */
+  200: BaseResponse;
+}
+
+export type PizzaControllerCancelPizzaOrderResponse =
+  PizzaControllerCancelPizzaOrderResponses[keyof PizzaControllerCancelPizzaOrderResponses];
 
 export interface ClientOptions {
   baseUrl: (string & {}) | `${string}://${string}`;

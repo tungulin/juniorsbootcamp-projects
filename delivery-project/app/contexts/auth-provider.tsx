@@ -14,12 +14,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-export const useAuthContext = () => {
-  const ctx = use(AuthContext);
-  if (!ctx) throw new Error('useAuthContext must be used within AuthProvider');
-  return ctx;
-};
-
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const tokenStorage = useAuthTokenLocalStorage();
   const userStorage = useUserLocalStorage();
@@ -36,3 +30,5 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     </AuthContext>
   );
 };
+
+export const useAuth = () => use(AuthContext) as AuthContextValue;

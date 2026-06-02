@@ -23,8 +23,8 @@ const Auth = () => {
 
   const otpTimer = useTimer(120, { immediately: false });
 
-  const authOtp = usePostApiAuthOtpMutation();
-  const signInUser = usePostApiUsersSigninMutation();
+  const authOtpMutation = usePostApiAuthOtpMutation();
+  const signInUserMutation = usePostApiUsersSigninMutation();
 
   const authTokenStorage = useAuthTokenLocalStorage();
   const userTokenStorage = useUserLocalStorage();
@@ -32,7 +32,7 @@ const Auth = () => {
   const handleSubmitPhone = formPhone.handleSubmit((data) => {
     const phone = data.phone.replace(/\D/g, '');
 
-    authOtp.mutate(
+    authOtpMutation.mutate(
       { body: { phone } },
       {
         onSuccess: () => {
@@ -46,7 +46,7 @@ const Auth = () => {
 
   const handleSubmitOtpCode = formOtpCode.handleSubmit((data) => {
     const phone = formPhone.getValues().phone.replace(/\D/g, '');
-    signInUser.mutate(
+    signInUserMutation.mutate(
       { body: { phone, code: data.code } },
       {
         onSuccess: (resp) => {
@@ -78,8 +78,13 @@ const Auth = () => {
                 name='phone'
                 placeholder='+7 (___) ___-__-__'
               />
-              <Button className='mt-8 w-full' disabled={authOtp.isPending} size='lg' type='submit'>
-                {authOtp.isPending && <Spinner data-icon='inline-start' />}
+              <Button
+                className='mt-8 w-full'
+                disabled={authOtpMutation.isPending}
+                size='lg'
+                type='submit'
+              >
+                {authOtpMutation.isPending && <Spinner data-icon='inline-start' />}
                 Войти
               </Button>
             </Form>
@@ -100,8 +105,13 @@ const Auth = () => {
             >
               <FormInput key='code' className='min-w-full' label='Проверочный код' name='code' />
               <div className='mt-8 flex flex-col gap-4'>
-                <Button className='w-full' disabled={signInUser.isPending} size='lg' type='submit'>
-                  {signInUser.isPending && <Spinner data-icon='inline-start' />}
+                <Button
+                  className='w-full'
+                  disabled={signInUserMutation.isPending}
+                  size='lg'
+                  type='submit'
+                >
+                  {signInUserMutation.isPending && <Spinner data-icon='inline-start' />}
                   Войти
                 </Button>
                 <Button

@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { withMask } from 'use-mask-input';
 import { z } from 'zod';
 
+import { useAuth } from '@/contexts';
 import { usePatchApiUsersProfileMutation } from '@/generated/api';
 import { Form, FormInput } from '@/shared/form';
-import { useAuth } from '@/shared/hooks/useAuth';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2 } from '@/shared/ui/typography';

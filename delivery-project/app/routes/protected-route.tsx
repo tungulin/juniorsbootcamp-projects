@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router';
 
+import { useAuth } from '@/contexts';
+
 import { Header } from '../layout/header';
-import { useAuth } from '../shared/hooks/useAuth';
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
