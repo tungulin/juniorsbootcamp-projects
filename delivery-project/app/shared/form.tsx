@@ -13,6 +13,7 @@ interface FormProps<T extends FieldValues> extends Omit<
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
 }
+
 export const Form = <T extends FieldValues>({ form, onSubmit, ...other }: FormProps<T>) => (
   <FormProvider {...form}>
     <form {...other} onSubmit={form.handleSubmit(onSubmit)} />

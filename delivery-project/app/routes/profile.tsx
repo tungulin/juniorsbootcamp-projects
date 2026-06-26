@@ -10,7 +10,7 @@ import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2 } from '@/shared/ui/typography';
 
-export const profileSchema = z.object({
+const profileSchema = z.object({
   lastname: z
     .string()
     .min(2, 'Фамилия должна содержать минимум 2 символа')
@@ -53,16 +53,16 @@ const Profile = () => {
       <H2 className='mt-2'>Профиль</H2>
       <Form form={form} onSubmit={handleSubmitForm}>
         <div className='mt-8 flex grid-cols-2 flex-col gap-4 md:grid md:gap-8'>
-          <FormInput label='Фамилия' name='lastname' placeholder='Иванов' />
+          <FormInput label='Фамилия' name='lastname' placeholder='Диназавриков' />
           <FormInput
             ref={withMask('+7 (999) 999-99-99')}
             label='Телефон'
             name='phone'
             placeholder='+7 (___) ___-__-__'
           />
-          <FormInput label='Имя' name='firstname' placeholder='Иван' />
+          <FormInput label='Имя' name='firstname' placeholder='Динозаврик' />
           <FormInput label='Email' name='email' placeholder='ivanov@example.com' />
-          <FormInput label='Отчество' name='middlename' placeholder='Иванович' />
+          <FormInput label='Отчество' name='middlename' placeholder='Динозаврикович' />
           <FormInput label='Город' name='city' placeholder='Москва' />
           <Button className='mt-8' disabled={patchProfile.isPending} size='lg' type='submit'>
             {patchProfile.isPending && <Spinner data-icon='inline-start' />}

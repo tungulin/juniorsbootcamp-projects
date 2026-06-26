@@ -1,7 +1,12 @@
 import type { PropsWithChildren } from 'react';
 
-import { getCookie, setCookie, usePreferredColorScheme } from '@siberiacancode/reactuse';
-import { createContext, use, useLayoutEffect, useMemo, useState } from 'react';
+import {
+  getCookie,
+  setCookie,
+  useIsomorphicLayoutEffect,
+  usePreferredColorScheme
+} from '@siberiacancode/reactuse';
+import { createContext, use, useMemo, useState } from 'react';
 
 import { COOKIES } from '@/shared/const';
 
@@ -33,7 +38,7 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     return (getCookie(COOKIES.THEME) as Theme | undefined) ?? 'system';
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const root = document.documentElement;
     const activeTheme = getTheme(theme);
 

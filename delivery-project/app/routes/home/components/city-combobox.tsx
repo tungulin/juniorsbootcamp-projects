@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useControllableState } from '@siberiacancode/reactuse';
+import { useMemo } from 'react';
 
 import type { DeliveryPoint } from '@/generated/api';
 
@@ -10,68 +11,77 @@ import {
   ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
-  ComboboxList
+  ComboboxList,
+  useComboboxAnchor
 } from '@/shared/ui/combobox';
 import { InputGroupAddon } from '@/shared/ui/input-group';
 import { Small } from '@/shared/ui/typography';
-
-const mapPointToComboboxItems = (points: DeliveryPoint[]) => points.map((point) => point.name);
 
 interface Props {
   colorPoint?: string;
   label?: string;
   placeholder?: string;
+  onChange: (value: DeliveryPoint | null) => void;
 }
 
 export const CityCombobox = (props: Props) => {
-  const { label, colorPoint, placeholder } = props;
+  const { label, onChange, colorPoint, placeholder } = props;
 
+  const anchor = useComboboxAnchor();
   const getDeliveryPointsQuery = useGetApiDeliveryPointsQuery();
-  const [value, setValue] = useState<string | null>('');
+  const [value, setValue] = useControllableState<DeliveryPoint | null>({
+    initialValue: null,
+    onChange
+  });
 
   const cities = getDeliveryPointsQuery.data?.data?.points ?? ([] as DeliveryPoint[]);
-
   const suggestedCities = useMemo(() => cities.slice(0, 3), [cities]);
 
-  const handleClickSuggestedCity = (city: string) => setValue(city);
+  const handleClickSuggestedCity = (city: DeliveryPoint) => setValue(city);
+
+  const disabled = getDeliveryPointsQuery.isError || getDeliveryPointsQuery.isLoading;
 
   return (
-    <div>
-      <Combobox
-        disabled={getDeliveryPointsQuery.isError || getDeliveryPointsQuery.isLoading}
-        items={mapPointToComboboxItems(cities)}
-        onValueChange={setValue}
-      >
+    <Combobox
+      disabled={disabled}
+      items={cities}
+      itemToStringLabel={(_package) => _package.name}
+      value={value}
+      onValueChange={setValue}
+    >
+      <div ref={anchor}>
         {label && <Small className='text-muted-foreground mb-3'>{label}</Small>}
-        <ComboboxInput className='h-[48px] rounded-full' placeholder={placeholder} value={value!}>
+        <ComboboxInput
+          className='h-[48px] rounded-full'
+          disabled={disabled}
+          placeholder={placeholder}
+        >
           <InputGroupAddon>
             <EllipseIcon className='mr-1' color={colorPoint} />
           </InputGroupAddon>
         </ComboboxInput>
-        {suggestedCities.length > 0 && (
-          <button className='mt-3 flex cursor-pointer gap-3'>
-            {suggestedCities.map((city) => (
-              <Small
-                key={city.id}
-                className='text-muted-foreground underline'
-                onClick={() => handleClickSuggestedCity(city.name)}
-              >
-                {city.name}
-              </Small>
-            ))}
-          </button>
-        )}
-        <ComboboxContent alignOffset={-15}>
-          <ComboboxEmpty>Такого города нету...</ComboboxEmpty>
-          <ComboboxList>
-            {(city) => (
-              <ComboboxItem key={city} value={city}>
-                {city}
-              </ComboboxItem>
-            )}
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-    </div>
+        <div className='mt-3 flex h-[14px] cursor-pointer gap-3'>
+          {suggestedCities.map((city) => (
+            <Small
+              key={city.id}
+              className='text-muted-foreground underline'
+              onClick={() => handleClickSuggestedCity(city)}
+            >
+              {city.name}
+            </Small>
+          ))}
+        </div>
+      </div>
+      <ComboboxContent anchor={anchor} side='bottom'>
+        <ComboboxEmpty>Такого города нету...</ComboboxEmpty>
+        <ComboboxList>
+          {(city) => (
+            <ComboboxItem key={city.name} value={city}>
+              {city.name}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
   );
 };

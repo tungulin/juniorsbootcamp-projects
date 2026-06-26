@@ -3,7 +3,7 @@ import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 import * as React from 'react';
 
-import { cn } from '@//shared/lib/shadcn-utils';
+import { cn } from '@/shared/lib/shadcn-utils';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
@@ -42,17 +42,20 @@ const inputGroupAddonVariants = cva(
 const InputGroupAddon = ({
   className,
   align = 'inline-start',
+  onClick,
   ...props
-}: React.ComponentProps<'button'> & VariantProps<typeof inputGroupAddonVariants>) => (
-  <button
+}: React.ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) => (
+  <div
     className={cn(inputGroupAddonVariants({ align }), className)}
     data-align={align}
     data-slot='input-group-addon'
+    role='presentation'
     onClick={(e) => {
       if ((e.target as HTMLElement).closest('button')) {
         return;
       }
       e.currentTarget.parentElement?.querySelector('input')?.focus();
+      onClick?.(e);
     }}
     {...props}
   />

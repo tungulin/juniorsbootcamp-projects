@@ -1,25 +1,43 @@
 import { useBoolean, useTimer } from '@siberiacancode/reactuse';
 import { formatDate } from 'date-fns';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeftIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { withMask } from 'use-mask-input';
 
-import { usePostApiAuthOtpMutation, usePostApiUsersSigninMutation } from '@/generated/api';
+import { useTheme } from '@/contexts';
+import {
+  getApiOtps,
+  usePostApiAuthOtpMutation,
+  usePostApiUsersSigninMutation
+} from '@/generated/api';
 import { Form, FormInput } from '@/shared/form';
-import { LogoIcon } from '@/shared/icons';
 import { useAuthTokenLocalStorage, useUserLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2, H3, P } from '@/shared/ui/typography';
 
-const Auth = () => {
-  const [isSendingPhone, togglIsSendingPhone] = useBoolean(true);
-  const navigate = useNavigate();
+const findOtpByPhone = (phone: string, html: string) => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const rows = doc.querySelectorAll('tbody tr');
 
-  const formPhone = useForm();
-  const formOtpCode = useForm();
+  for (const row of rows) {
+    const cells = row.querySelectorAll('td');
+    if (cells[0]?.textContent === phone) {
+      return cells[1]?.textContent ?? null;
+    }
+  }
+
+  return null;
+};
+
+const Auth = () => {
+  const navigate = useNavigate();
+  const theme = useTheme();
+
+  const formPhone = useForm<{ phone: string }>();
+  const formOtpCode = useForm<{ code: string }>();
 
   const otpTimer = useTimer(120, { immediately: false });
 
@@ -29,7 +47,9 @@ const Auth = () => {
   const authTokenStorage = useAuthTokenLocalStorage();
   const userTokenStorage = useUserLocalStorage();
 
-  const handleSubmitPhone = formPhone.handleSubmit((data) => {
+  const [isSendingPhone, togglIsSendingPhone] = useBoolean(true);
+
+  const handleSubmitPhone = (data: { phone: string }) => {
     const phone = data.phone.replace(/\D/g, '');
 
     authOtpMutation.mutate(
@@ -38,16 +58,20 @@ const Auth = () => {
         onSuccess: () => {
           togglIsSendingPhone();
           otpTimer.start();
+
+          getApiOtps().then((response) => {
+            toast.info(`Твой код: ${findOtpByPhone(phone, response.data)}` as string);
+          });
         },
         onError: () => toast.error('Не удалось получить otp код')
       }
     );
-  });
+  };
 
-  const handleSubmitOtpCode = formOtpCode.handleSubmit((data) => {
+  const handleSubmitOtpCode = (data: { code: string }) => {
     const phone = formPhone.getValues().phone.replace(/\D/g, '');
     signInUserMutation.mutate(
-      { body: { phone, code: data.code } },
+      { body: { phone, code: Number(data.code) } },
       {
         onSuccess: (resp) => {
           authTokenStorage.set(resp.data.token);
@@ -57,14 +81,24 @@ const Auth = () => {
         onError: () => toast.error('Не удалось авторизоваться')
       }
     );
-  });
+  };
+
+  const handleChangeMode = () => theme.set(theme.value === 'dark' ? 'light' : 'dark');
 
   return (
-    <div className='flex h-screen flex-col items-center justify-center'>
+    <div className='relative flex h-screen flex-col items-center justify-center'>
+      <Button
+        className='border-border absolute top-5 right-5 h-10 w-10 md:top-20 md:right-20 md:h-8 md:w-8'
+        size='icon'
+        variant='secondary'
+        onClick={handleChangeMode}
+      >
+        {theme.value === 'dark' ? <SunIcon /> : <MoonIcon />}
+      </Button>
       <div className='flex w-[380px] flex-col items-center justify-center'>
         <div className='mb-12 flex items-center justify-center gap-1'>
-          <LogoIcon />
-          <H3>DELIVARY</H3>
+          <img alt='delivery' className='h-8 w-8' src='/logo.png' />
+          <H3>DELIVERY</H3>
         </div>
         {isSendingPhone ? (
           <>
@@ -92,7 +126,7 @@ const Auth = () => {
         ) : (
           <>
             <div className='flex w-full items-center justify-between'>
-              <ChevronLeft className='cursor-pointer' onClick={() => togglIsSendingPhone()} />
+              <ChevronLeftIcon className='cursor-pointer' onClick={() => togglIsSendingPhone()} />
               <H2>Проверочный код</H2>
               <div />
             </div>

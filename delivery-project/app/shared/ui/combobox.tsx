@@ -129,7 +129,10 @@ const ComboboxItem = ({ className, children, ...props }: ComboboxPrimitive.Item.
     {children}
     <ComboboxPrimitive.ItemIndicator
       render={
-        <span className='pointer-events-none absolute right-2 flex size-4 items-center justify-center' />
+        <span
+          className='pointer-events-none absolute right-2 flex size-4 items-center justify-center'
+          data-slot='combobox-item-indicator'
+        />
       }
     >
       <CheckIcon className='pointer-events-none' />

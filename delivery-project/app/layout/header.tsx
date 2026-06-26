@@ -3,7 +3,7 @@ import { CalculatorIcon, HistoryIcon, LogOutIcon, MoonIcon, SunIcon, UserIcon } 
 import { useLocation, useNavigate } from 'react-router';
 
 import { useTheme } from '@/contexts/theme-provider';
-import { LogoIcon } from '@/shared/icons';
+import { useAuthTokenLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
 import { H4 } from '@/shared/ui/typography';
 
@@ -12,16 +12,27 @@ export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const tokenStorage = useAuthTokenLocalStorage();
+
   const handleChangeMode = () => theme.set(theme.value === 'dark' ? 'light' : 'dark');
   const handleNavigateToProfile = () => navigate('/profile');
   const handleNavigateToHome = () => navigate('/');
   const handleNavigateToHistory = () => navigate('/history');
 
+  const handleExit = () => {
+    navigate('/auth');
+    tokenStorage.remove();
+  };
+
   return (
     <>
-      <div className='mx-5 my-6 hidden items-center justify-between rounded-full border p-3 md:flex lg:max-w-[75rem] xl:mx-auto'>
-        <button className='flex cursor-pointer gap-1' tabIndex={0} onClick={handleNavigateToHome}>
-          <LogoIcon />
+      <div className='mt-5 hidden items-center justify-between rounded-full border p-3 md:flex lg:mx-auto lg:max-w-[75rem]'>
+        <button
+          className='flex cursor-pointer items-center gap-1'
+          tabIndex={0}
+          onClick={handleNavigateToHome}
+        >
+          <img alt='delivery' className='h-8 w-8' src='/logo.png' />
           <H4>Delivery</H4>
         </button>
         <div className='flex items-center gap-3'>
@@ -31,13 +42,12 @@ export const Header = () => {
           <Button size='icon' variant='secondary' onClick={handleChangeMode}>
             {theme.value === 'dark' ? <SunIcon /> : <MoonIcon />}
           </Button>
-          <Button size='sm'>
+          <Button className='bg-brand text-white' size='sm' onClick={handleExit}>
             Выйти
             <LogOutIcon />
           </Button>
         </div>
       </div>
-
       <div className='fixed right-4 bottom-4 left-4 z-10 h-[58px] rounded-full border md:hidden'>
         <div className='bg-background grid h-full grid-cols-3 rounded-full p-1'>
           <Button

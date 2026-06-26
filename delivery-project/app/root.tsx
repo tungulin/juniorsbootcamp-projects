@@ -1,3 +1,4 @@
+import { BombIcon, CheckIcon, InfoIcon } from 'lucide-react';
 import {
   isRouteErrorResponse,
   Links,
@@ -25,7 +26,16 @@ export const Layout = ({ children }: { children: React.ReactNode }) => (
     <body>
       <Provider>
         {children}
-        <Toaster />
+        <Toaster
+          closeButton
+          icons={{
+            success: <CheckIcon size={16} />,
+            info: <InfoIcon size={16} />,
+            warning: null,
+            error: <BombIcon size={16} />,
+            loading: null
+          }}
+        />
         <ScrollRestoration />
         <Scripts />
       </Provider>
