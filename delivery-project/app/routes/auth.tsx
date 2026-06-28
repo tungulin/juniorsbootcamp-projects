@@ -78,6 +78,7 @@ const Auth = () => {
       { body: { phone, code: Number(code) } },
       {
         onSuccess: (resp) => {
+          toast.dismiss();
           authTokenStorage.set(resp.data.token);
           userStorage.set(resp.data.user);
           navigate('/');
