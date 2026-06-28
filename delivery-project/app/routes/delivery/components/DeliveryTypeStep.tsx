@@ -42,10 +42,10 @@ export const DeliveryTypeStep = () => {
 
   useEffect(() => {
     if (senderPoint && receiverPoint && size) {
-      context.setSelectedOption({
-        ...context.selectedOption,
-        senderPoint,
-        receiverPoint,
+      context.setDeliveryOrder({
+        ...context.deliveryOrder,
+        senderPointId: senderPoint.id,
+        receiverPointId: receiverPoint.id,
         size
       });
       calcDeliveryMutation.mutate(
@@ -71,7 +71,16 @@ export const DeliveryTypeStep = () => {
 
   const handleClickTypeDelivery = (delivery: DeliveryOption) => {
     context.stepper.next();
-    context.setSelectedOption({ ...context.selectedOption, delivery });
+
+    if (size && delivery) {
+      context.setDeliveryOrder({
+        ...context.deliveryOrder,
+        packageId: size.id,
+        price: delivery.price,
+        days: delivery.days,
+        optionType: delivery.type
+      });
+    }
   };
 
   return (

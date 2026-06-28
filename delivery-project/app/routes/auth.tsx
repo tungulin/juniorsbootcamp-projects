@@ -1,6 +1,7 @@
 import { useBoolean, useTimer } from '@siberiacancode/reactuse';
 import { formatDate } from 'date-fns';
 import { ChevronLeftIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -15,6 +16,7 @@ import {
 import { Form, FormInput } from '@/shared/form';
 import { useAuthTokenLocalStorage, useUserLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/shared/ui/input-otp';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2, H3, P } from '@/shared/ui/typography';
 
@@ -37,7 +39,6 @@ const Auth = () => {
   const theme = useTheme();
 
   const formPhone = useForm<{ phone: string }>();
-  const formOtpCode = useForm<{ code: string }>();
 
   const otpTimer = useTimer(120, { immediately: false });
 
@@ -47,6 +48,7 @@ const Auth = () => {
   const authTokenStorage = useAuthTokenLocalStorage();
   const userTokenStorage = useUserLocalStorage();
 
+  const [code, setCode] = useState('');
   const [isSendingPhone, togglIsSendingPhone] = useBoolean(true);
 
   const handleSubmitPhone = (data: { phone: string }) => {
@@ -68,10 +70,10 @@ const Auth = () => {
     );
   };
 
-  const handleSubmitOtpCode = (data: { code: string }) => {
+  const handleSubmitOtpCode = () => {
     const phone = formPhone.getValues().phone.replace(/\D/g, '');
     signInUserMutation.mutate(
-      { body: { phone, code: Number(data.code) } },
+      { body: { phone, code: Number(code) } },
       {
         onSuccess: (resp) => {
           authTokenStorage.set(resp.data.token);
@@ -131,40 +133,35 @@ const Auth = () => {
               <div />
             </div>
             <P className='mb-6'>На указанный вами номер был отправлен проверочный код</P>
-            <Form
-              key='code_form'
-              className='w-full'
-              form={formOtpCode}
-              onSubmit={handleSubmitOtpCode}
-            >
-              <FormInput key='code' className='min-w-full' label='Проверочный код' name='code' />
-              <div className='mt-8 flex flex-col gap-4'>
-                <Button
-                  className='w-full'
-                  disabled={signInUserMutation.isPending}
-                  size='lg'
-                  type='submit'
-                >
-                  {signInUserMutation.isPending && <Spinner data-icon='inline-start' />}
-                  Войти
-                </Button>
-                <Button
-                  className='w-full'
-                  disabled={otpTimer.active}
-                  size='lg'
-                  type='submit'
-                  variant='outline'
-                >
-                  <div className='flex w-full justify-between'>
-                    <div />
-                    <div>Отправить код повторно</div>
-                    <div>
-                      {otpTimer.active && formatDate(new Date(otpTimer.count * 1000), 'mm:ss')}
-                    </div>
+            <InputOTP maxLength={6} onChange={setCode}>
+              <InputOTPGroup>
+                <InputOTPSlot className='h-[40px] w-[63px]' index={0} />
+                <InputOTPSlot className='h-[40px] w-[63px]' index={1} />
+                <InputOTPSlot className='h-[40px] w-[63px]' index={2} />
+                <InputOTPSlot className='h-[40px] w-[63px]' index={3} />
+                <InputOTPSlot className='h-[40px] w-[63px]' index={4} />
+                <InputOTPSlot className='h-[40px] w-[63px]' index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+            <div className='mt-8 flex w-full flex-col gap-4'>
+              <Button
+                disabled={signInUserMutation.isPending}
+                size='lg'
+                onClick={() => handleSubmitOtpCode()}
+              >
+                {signInUserMutation.isPending && <Spinner data-icon='inline-start' />}
+                Войти
+              </Button>
+              <Button disabled={otpTimer.active} size='lg' type='submit' variant='outline'>
+                <div className='flex w-full justify-between'>
+                  <div />
+                  <div>Отправить код повторно</div>
+                  <div>
+                    {otpTimer.active && formatDate(new Date(otpTimer.count * 1000), 'mm:ss')}
                   </div>
-                </Button>
-              </div>
-            </Form>
+                </div>
+              </Button>
+            </div>
           </>
         )}
       </div>

@@ -1,26 +1,32 @@
 import type { UseStepReturn } from '@siberiacancode/reactuse';
 
-import type { DeliveryOption, DeliveryPackageType, DeliveryPoint } from '@/generated/api';
+import type {
+  CreateDeliveryOrderPersonDto,
+  CreateDeliveryOrderReceiverAddressDto,
+  DeliveryPackageType
+} from '@/generated/api';
 
 import { createBareContext } from '@/shared/lib/createBareContext';
 
-import type { ReceiverFormFields } from './components/ReceiverFormStep';
-import type { SenderFormFields } from './components/SenderFormStep';
-
-export interface SelectedDeliveryOptions {
-  delivery?: DeliveryOption;
-  receiver: ReceiverFormFields;
-  receiverPoint: DeliveryPoint;
-  sender: SenderFormFields;
-  senderPoint: DeliveryPoint;
-
+export interface DeliveryOrder {
+  days: number;
+  optionType: string;
+  packageId: string;
+  payer: 'receiver' | 'sender';
+  price: number;
+  receiver: CreateDeliveryOrderPersonDto;
+  receiverAddress: CreateDeliveryOrderReceiverAddressDto;
+  receiverPointId: string;
+  sender: CreateDeliveryOrderPersonDto;
+  senderAddress: CreateDeliveryOrderReceiverAddressDto;
+  senderPointId: string;
   size: DeliveryPackageType;
 }
 
 interface Params {
-  selectedOption: SelectedDeliveryOptions;
+  deliveryOrder: DeliveryOrder;
   stepper: UseStepReturn;
-  setSelectedOption: (options: SelectedDeliveryOptions) => void;
+  setDeliveryOrder: (options: DeliveryOrder) => void;
 }
 
 export const [DeliveryProvider, useDeliveryContext] = createBareContext<Params>();

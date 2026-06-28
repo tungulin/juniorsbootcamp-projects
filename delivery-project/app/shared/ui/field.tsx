@@ -177,13 +177,9 @@ const FieldError = ({
     );
   }, [children, errors]);
 
-  if (!content) {
-    return null;
-  }
-
   return (
     <div
-      className={cn('text-destructive ml-2 text-xs font-normal', className)}
+      className={cn('text-destructive ml-2 min-h-4 text-xs font-normal', className)}
       data-slot='field-error'
       role='alert'
       {...props}

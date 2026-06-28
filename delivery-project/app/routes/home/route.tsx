@@ -36,7 +36,7 @@ const Home = () => {
       <div className='mt-5 flex grid-cols-2 flex-col gap-4 md:grid'>
         <div className='rounded-3xl border p-8'>
           <H3 className='mb-6'>Рассчитать доставку</H3>
-          <div className='flex grid-cols-2 flex-col gap-10'>
+          <div className='flex flex-col gap-10'>
             <CityCombobox
               colorPoint='green'
               label='Город отправки'
@@ -60,7 +60,7 @@ const Home = () => {
           </div>
         </div>
         <div className='flex h-full flex-col gap-4'>
-          <div className='relative h-[50%] rounded-3xl border bg-[#6AC66A] p-8'>
+          <div className="relative h-[50%] rounded-3xl border bg-[#6AC66A] bg-[url('/bg-muted.png')] bg-cover bg-center p-8">
             <H3 className='text-white'>Бесплатная доставка</H3>
             <P className='font-normal text-white'>за приведенного друга</P>
             <img
@@ -69,10 +69,13 @@ const Home = () => {
               src='/deliver.png'
             />
           </div>
-          <div className='h-[50%] rounded-3xl border p-8'>
-            <H3 className='mb-6'>Отследить поссылку</H3>
+          <div className="h-[50%] rounded-3xl border bg-[url('/bg-muted-2.png')] bg-cover bg-center p-8">
+            <H3 className='mb-6 text-white'>Отследить поссылку</H3>
             <div className='flex items-center gap-2'>
-              <Input placeholder='Номер заказа' />
+              <Input
+                className='bg-white! text-black! placeholder:text-gray-400!'
+                placeholder='Номер заказа'
+              />
               <Button className='w-[5rem]' size='lg'>
                 Найти
               </Button>

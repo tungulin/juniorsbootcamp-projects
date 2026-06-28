@@ -2,52 +2,52 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { Form, FormInput } from '@/shared/form';
+import { Form, FormInput, FormTextarea } from '@/shared/form';
 import { Button } from '@/shared/ui/button';
 
 import { useDeliveryContext } from '../context';
 
-const receiverFormSchema = z.object({
-  lastname: z
-    .string()
-    .min(2, 'Фамилия должна содержать минимум 2 символа')
-    .max(50, 'Фамилия слишком длинная'),
-  firstname: z
-    .string()
-    .min(2, 'Имя должно содержать минимум 2 символа')
-    .max(50, 'Имя слишком длинное'),
-  middlename: z
-    .string()
-    .min(2, 'Отчество должно содержать минимум 2 символа')
-    .max(50, 'Отчество слишком длинное'),
-  phone: z.string()
+const receiveAddressFormSchema = z.object({
+  street: z.string().min(2, 'Введите название улицы').max(50, 'Название улицы слишком длинное'),
+  house: z.string().min(1, 'Введите номер дома').max(10, 'Номер дома слишком длинный'),
+  apartment: z.string().min(1, 'Введите номер квартиры').max(10, 'Номер квартиры слишком длинный'),
+  comment: z.string()
 });
 
-export type ReceiverFormFields = z.infer<typeof receiverFormSchema>;
+type ReceiveAddressFormFields = z.infer<typeof receiveAddressFormSchema>;
 
 export const PickupAddressStep = () => {
   const context = useDeliveryContext();
-  const receiver = context.selectedOption.receiver;
+  const receiverAddress = context.deliveryOrder.receiverAddress ?? {};
 
-  const form = useForm<ReceiverFormFields>({
-    resolver: zodResolver(receiverFormSchema),
+  const form = useForm<ReceiveAddressFormFields>({
+    resolver: zodResolver(receiveAddressFormSchema),
     defaultValues: {
-      lastname: receiver.lastname ?? '',
-      firstname: receiver.firstname ?? '',
-      middlename: receiver.middlename ?? '',
-      phone: receiver.phone ?? ''
+      street: receiverAddress.street ?? '',
+      house: receiverAddress.house ?? '',
+      apartment: receiverAddress.apartment ?? '',
+      comment: receiverAddress.comment ?? ''
     }
   });
 
-  const handleSubmitForm = () => {};
+  const handleSubmitForm = (fields: ReceiveAddressFormFields) => {
+    context.setDeliveryOrder({ ...context.deliveryOrder, receiverAddress: fields });
+    context.stepper.next();
+  };
 
   return (
     <Form key='phone_form' className='w-full' form={form} onSubmit={handleSubmitForm}>
       <div className='flex flex-col gap-4 pr-4'>
-        <FormInput label='Фамилия' name='lastname' placeholder='Диназавриков' />
-        <FormInput label='Имя' name='firstname' placeholder='Динозаврик' />
-        <FormInput label='Отчество' name='middlename' placeholder='Динозаврикович' />
-        <FormInput label='Телефон' name='phone' placeholder='+7...' />
+        <FormInput label='Улица' name='street' placeholder='Улица' />
+        <FormInput label='Дом' name='house' placeholder='Номер дома' />
+        <FormInput label='Квартира' name='apartment' placeholder='Номер квартиры' />
+        <FormTextarea
+          className='max-h-40'
+          label='Заметка для курьера'
+          maxLength={200}
+          name='comment'
+          placeholder='Комментарий для курьера'
+        />
       </div>
       <div>
         <div className='mt-5 flex gap-2'>

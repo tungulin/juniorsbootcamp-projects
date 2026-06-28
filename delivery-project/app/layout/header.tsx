@@ -36,6 +36,9 @@ export const Header = () => {
           <H4>Delivery</H4>
         </button>
         <div className='flex items-center gap-3'>
+          <Button size='icon' variant='secondary' onClick={handleNavigateToHistory}>
+            <HistoryIcon />
+          </Button>
           <Button size='icon' variant='secondary' onClick={handleNavigateToProfile}>
             <UserIcon />
           </Button>

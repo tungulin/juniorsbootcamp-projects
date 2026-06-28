@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { withMask } from 'use-mask-input';
 import z from 'zod';
 
+import { PHONE_REGEX, SINGLE_WORD_REGEX } from '@/shared/const';
 import { Form, FormInput } from '@/shared/form';
 import { Button } from '@/shared/ui/button';
 
@@ -11,23 +13,26 @@ const senderFormSchema = z.object({
   lastname: z
     .string()
     .min(2, 'Фамилия должна содержать минимум 2 символа')
-    .max(50, 'Фамилия слишком длинная'),
+    .max(50, 'Фамилия слишком длинная')
+    .regex(SINGLE_WORD_REGEX, 'Должно быть одним словом без пробелов'),
   firstname: z
     .string()
     .min(2, 'Имя должно содержать минимум 2 символа')
-    .max(50, 'Имя слишком длинное'),
+    .max(50, 'Имя слишком длинное')
+    .regex(SINGLE_WORD_REGEX, 'Должно быть одним словом без пробелов'),
   middlename: z
     .string()
     .min(2, 'Отчество должно содержать минимум 2 символа')
-    .max(50, 'Отчество слишком длинное'),
-  phone: z.string()
+    .max(50, 'Отчество слишком длинное')
+    .regex(SINGLE_WORD_REGEX, 'Должно быть одним словом без пробелов'),
+  phone: z.string().regex(PHONE_REGEX, 'Введите телефон в формате +7 (999) 999-99-99')
 });
 
 export type SenderFormFields = z.infer<typeof senderFormSchema>;
 
 export const SenderFormStep = () => {
   const context = useDeliveryContext();
-  const sender = context.selectedOption.sender ?? {};
+  const sender = context.deliveryOrder.sender ?? {};
 
   const form = useForm<SenderFormFields>({
     resolver: zodResolver(senderFormSchema),
@@ -40,7 +45,8 @@ export const SenderFormStep = () => {
   });
 
   const handleSubmitForm = (fields: SenderFormFields) => {
-    context.setSelectedOption({ ...context.selectedOption, sender: fields });
+    const phone = fields.phone.replace(/\D/g, '');
+    context.setDeliveryOrder({ ...context.deliveryOrder, sender: { ...fields, phone } });
     context.stepper.next();
   };
 
@@ -50,7 +56,12 @@ export const SenderFormStep = () => {
         <FormInput label='Фамилия' name='lastname' placeholder='Диназавриков' />
         <FormInput label='Имя' name='firstname' placeholder='Динозаврик' />
         <FormInput label='Отчество' name='middlename' placeholder='Динозаврикович' />
-        <FormInput label='Телефон' name='phone' placeholder='+7...' />
+        <FormInput
+          ref={withMask('+7 (999) 999-99-99')}
+          label='Телефон'
+          name='phone'
+          placeholder='+7 (___) ___-__-__'
+        />
       </div>
       <div>
         <div className='mt-5 flex gap-2'>

@@ -1,19 +1,30 @@
-import { BombIcon, CheckIcon, InfoIcon } from 'lucide-react';
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration
-} from 'react-router';
+import type { ToasterProps } from 'sonner';
+
+import { BombIcon, CheckIcon, InfoIcon, RefreshCwIcon } from 'lucide-react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { Toaster } from 'sonner';
 
-import type { Route } from './+types/root';
-
 import { Provider } from './contexts/provider';
+import { Button } from './shared/ui/button';
 
 import './app.css';
+
+const toasterProps: ToasterProps = {
+  icons: {
+    success: <CheckIcon size={16} />,
+    info: <InfoIcon size={16} />,
+    warning: null,
+    error: <BombIcon size={16} />,
+    loading: null
+  },
+  toastOptions: {
+    classNames: {
+      toast: 'rounded-2xl! border-brand/20!',
+      title: 'font-semibold!',
+      closeButton: 'border-brand/20!'
+    }
+  }
+};
 
 export const Layout = ({ children }: { children: React.ReactNode }) => (
   <html lang='en'>
@@ -26,16 +37,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => (
     <body>
       <Provider>
         {children}
-        <Toaster
-          closeButton
-          icons={{
-            success: <CheckIcon size={16} />,
-            info: <InfoIcon size={16} />,
-            warning: null,
-            error: <BombIcon size={16} />,
-            loading: null
-          }}
-        />
+        <Toaster closeButton {...toasterProps} />
         <ScrollRestoration />
         <Scripts />
       </Provider>
@@ -45,31 +47,16 @@ export const Layout = ({ children }: { children: React.ReactNode }) => (
 
 const App = () => <Outlet />;
 
-export const ErrorBoundary = ({ error }: Route.ErrorBoundaryProps) => {
-  let message = 'Oops!';
-  let details = 'An unexpected error occurred.';
-  let stack: string | undefined;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? '404' : 'Error';
-    details =
-      error.status === 404 ? 'The requested page could not be found.' : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
-
-  return (
-    <main className='container mx-auto p-4 pt-16'>
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className='w-full overflow-x-auto p-4'>
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
-  );
-};
+export const ErrorBoundary = () => (
+  <main className='flex min-h-screen flex-col items-center justify-center gap-4 text-center'>
+    <img alt='error' className='w-64' src='/error-feedback.png' />
+    <h1 className='text-2xl font-bold'>Оооой!</h1>
+    <p className='text-muted-foreground'>Что-то пошло не так. Попробуйте обновить страницу</p>
+    <Button onClick={() => window.location.reload()}>
+      <RefreshCwIcon size={20} />
+      Обновить страницу
+    </Button>
+  </main>
+);
 
 export default App;
