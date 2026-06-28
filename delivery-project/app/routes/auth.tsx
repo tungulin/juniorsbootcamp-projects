@@ -62,7 +62,9 @@ const Auth = () => {
           otpTimer.start();
 
           getApiOtps().then((response) => {
-            toast.info(`Твой код: ${findOtpByPhone(phone, response.data)}` as string);
+            toast.info(`Твой код: ${findOtpByPhone(phone, response.data)}`, {
+              duration: 10_000
+            });
           });
         },
         onError: () => toast.error('Не удалось получить otp код')
@@ -133,14 +135,14 @@ const Auth = () => {
               <div />
             </div>
             <P className='mb-6'>На указанный вами номер был отправлен проверочный код</P>
-            <InputOTP maxLength={6} onChange={setCode}>
-              <InputOTPGroup>
-                <InputOTPSlot className='h-[40px] w-[63px]' index={0} />
-                <InputOTPSlot className='h-[40px] w-[63px]' index={1} />
-                <InputOTPSlot className='h-[40px] w-[63px]' index={2} />
-                <InputOTPSlot className='h-[40px] w-[63px]' index={3} />
-                <InputOTPSlot className='h-[40px] w-[63px]' index={4} />
-                <InputOTPSlot className='h-[40px] w-[63px]' index={5} />
+            <InputOTP containerClassName='w-full' maxLength={6} onChange={setCode}>
+              <InputOTPGroup className='w-full'>
+                <InputOTPSlot className='h-[40px] w-auto flex-1 md:w-[63px]' index={0} />
+                <InputOTPSlot className='h-[40px] w-auto flex-1 md:w-[63px]' index={1} />
+                <InputOTPSlot className='h-[40px] w-auto flex-1 md:w-[63px]' index={2} />
+                <InputOTPSlot className='h-[40px] w-auto flex-1 md:w-[63px]' index={3} />
+                <InputOTPSlot className='h-[40px] w-auto flex-1 md:w-[63px]' index={4} />
+                <InputOTPSlot className='h-[40px] w-auto flex-1 md:w-[63px]' index={5} />
               </InputOTPGroup>
             </InputOTP>
             <div className='mt-8 flex w-full flex-col gap-4'>

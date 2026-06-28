@@ -1,5 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMediaQuery } from '@siberiacancode/reactuse';
+import { LogOutIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 import { withMask } from 'use-mask-input';
 import { z } from 'zod';
 
@@ -7,7 +11,7 @@ import { useAuth } from '@/contexts';
 import { usePatchApiUsersProfileMutation } from '@/generated/api';
 import { Main } from '@/layout';
 import { Form, FormInput } from '@/shared/form';
-import { useUserLocalStorage } from '@/shared/localltorage';
+import { useAuthTokenLocalStorage, useUserLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2 } from '@/shared/ui/typography';
@@ -31,8 +35,12 @@ type ProfileFormFields = z.infer<typeof profileSchema>;
 const Profile = () => {
   const { user } = useAuth();
   const userStorage = useUserLocalStorage();
+  const navigate = useNavigate();
+
+  const isTablet = useMediaQuery('(max-width: 767px)');
 
   const patchProfileMutation = usePatchApiUsersProfileMutation();
+  const tokenStorage = useAuthTokenLocalStorage();
 
   const form = useForm<ProfileFormFields>({
     resolver: zodResolver(profileSchema),
@@ -51,14 +59,33 @@ const Profile = () => {
       {
         onSuccess: (response) => {
           userStorage.set(response.data.user);
+          toast.success('Данные успешно обновлены!');
+        },
+        onError: () => {
+          toast.error('Не удалось обновить данные');
         }
       }
     );
   };
 
+  const handleExit = () => {
+    navigate('/auth');
+    tokenStorage.remove();
+  };
+
   return (
-    <Main>
-      <H2>Профиль</H2>
+    <Main className='pt-3'>
+      {isTablet ? (
+        <div className='flex items-center justify-between'>
+          <H2>Профиль</H2>
+          <Button className='bg-brand text-white' size='sm' onClick={handleExit}>
+            Выйти
+            <LogOutIcon />
+          </Button>
+        </div>
+      ) : (
+        <H2>Профиль</H2>
+      )}
       <Form form={form} onSubmit={handleSubmitForm}>
         <div className='mt-8 flex grid-cols-2 flex-col gap-2 md:grid md:gap-4'>
           <FormInput label='Фамилия' name='lastname' placeholder='Диназавриков' />

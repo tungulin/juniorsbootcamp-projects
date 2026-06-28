@@ -26,7 +26,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className='mx-3 mt-5 hidden items-center justify-between rounded-full border p-3 md:flex xl:mx-auto xl:max-w-[75rem]'>
+      <div className='mx-3 mt-5 hidden items-center justify-between rounded-full border p-3 md:flex xl:mx-auto xl:max-w-[85rem]'>
         <button
           className='flex cursor-pointer items-center gap-1'
           tabIndex={0}

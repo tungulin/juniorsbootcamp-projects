@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { RefreshCwIcon } from 'lucide-react';
+import { Link } from 'react-router';
 import { toast } from 'sonner';
 
 import {
@@ -69,6 +70,24 @@ const History = () => {
               Обновить страницу
             </Button>
           </div>
+        </div>
+      </Main>
+    );
+  }
+
+  if (deliveryOrderQuery.isSuccess && orders.length === 0) {
+    return (
+      <Main>
+        <H4 className='mt-5'>История отправлений</H4>
+        <div className='flex flex-col items-center justify-center'>
+          <img alt='loading' className='mt-20 w-50' src='/deliver-home.png' />
+          <Large className='mt-8'>Вы ещё ничего не отправляли.</Large>
+          <Small className='mt-2 font-light'>
+            Сделайте свою первую{' '}
+            <Link className='text-brand font-medium hover:opacity-80' to='/'>
+              заявку.
+            </Link>{' '}
+          </Small>
         </div>
       </Main>
     );
