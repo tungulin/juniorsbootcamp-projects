@@ -73,7 +73,7 @@ const Delivery = () => {
               })}
             </BreadcrumbList>
           </Breadcrumb>
-          <div className='grid h-full min-h-[600px] grid-cols-3 gap-4'>
+          <div className='flex h-full min-h-[600px] grid-cols-3 flex-col gap-4 md:grid'>
             <div className='col-span-2 h-full'>
               <H3>{STEPPERS[stepper.currentStep - 1].title}</H3>
               <div className='my-5'>
@@ -83,14 +83,17 @@ const Delivery = () => {
               {Step && <Step />}
             </div>
             {stepper.currentStep !== 7 && (
-              <div className='bg-secondary flex-1 rounded-2xl p-6'>
+              <div className='bg-secondary hidden flex-1 rounded-2xl p-6 md:block'>
                 <H3 className='mb-4'>Ваш заказ</H3>
                 <div className='flex flex-col gap-6'>
                   <div className='flex flex-col gap-2'>
                     <Small className='text-muted-foreground font-light'>Тип доставки</Small>
                     <Small className='font-light'>
-                      {/* TODO: Fix backend type */}
-                      {optionType === ('express' as any) ? 'Экспресс-доставка' : 'Обычная доставка'}
+                      {optionType
+                        ? optionType === 'express'
+                          ? 'Экспресс-доставка'
+                          : 'Обычная доставка'
+                        : '-'}
                     </Small>
                   </div>
                   <div className='flex flex-col gap-2'>

@@ -16,12 +16,12 @@ const profileSchema = z.object({
   lastname: z
     .string()
     .min(2, 'Фамилия должна содержать минимум 2 символа')
-    .max(50, 'Фамилия слишком длинная'),
+    .max(20, 'Фамилия слишком длинная'),
   firstname: z
     .string()
     .min(2, 'Имя должно содержать минимум 2 символа')
-    .max(50, 'Имя слишком длинное'),
-  middlename: z.string().max(50, 'Отчество слишком длинное').optional().or(z.literal('')),
+    .max(20, 'Имя слишком длинное'),
+  middlename: z.string().max(20, 'Отчество слишком длинное').optional().or(z.literal('')),
   email: z.email('Некорректный email'),
   city: z.string().min(2, 'Укажите город').max(100, 'Название города слишком длинное')
 });

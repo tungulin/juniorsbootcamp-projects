@@ -26,7 +26,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className='mt-5 hidden items-center justify-between rounded-full border p-3 md:flex lg:mx-auto lg:max-w-[75rem]'>
+      <div className='mx-3 mt-5 hidden items-center justify-between rounded-full border p-3 md:flex xl:mx-auto xl:max-w-[75rem]'>
         <button
           className='flex cursor-pointer items-center gap-1'
           tabIndex={0}
@@ -51,7 +51,7 @@ export const Header = () => {
           </Button>
         </div>
       </div>
-      <div className='fixed right-4 bottom-4 left-4 z-10 h-[58px] rounded-full border md:hidden'>
+      <div className='fixed right-3 bottom-4 left-3 z-10 h-[58px] rounded-full border md:hidden'>
         <div className='bg-background grid h-full grid-cols-3 rounded-full p-1'>
           <Button
             className={clsx(location.pathname === '/' && 'bg-brand text-white', 'h-full w-full')}

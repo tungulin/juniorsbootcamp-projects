@@ -97,8 +97,8 @@ const Auth = () => {
       >
         {theme.value === 'dark' ? <SunIcon /> : <MoonIcon />}
       </Button>
-      <div className='flex w-[380px] flex-col items-center justify-center'>
-        <div className='mb-12 flex items-center justify-center gap-1'>
+      <div className='mx-5 flex max-w-[380px] flex-col items-center justify-center md:mx-0'>
+        <div className='mb-7 flex items-center justify-center gap-1'>
           <img alt='delivery' className='h-8 w-8' src='/logo.png' />
           <H3>DELIVERY</H3>
         </div>

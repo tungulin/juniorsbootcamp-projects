@@ -65,12 +65,11 @@ export const OrderReviewStep = () => {
     <>
       <div>
         <H3 className='mt-6'>Ваш заказ</H3>
-        <div className='mt-8 grid grid-cols-2 gap-8'>
+        <div className='mt-8 grid grid-cols-1 gap-8 md:grid-cols-2'>
           <div className='col-span-1 flex flex-col gap-2'>
             <Small className='text-muted-foreground font-light'>Тип доставки</Small>
             <Small className='font-light'>
-              {/* TODO: Fix backend type */}
-              {optionType === ('default' as any) ? 'Обычная доставка' : 'Экспресс доставка'}
+              {optionType === 'default' ? 'Обычная доставка' : 'Экспресс доставка'}
             </Small>
           </div>
           <div className='col-span-1 flex flex-col gap-2'>
@@ -120,7 +119,7 @@ export const OrderReviewStep = () => {
         </div>
       </div>
       <Dialog open={successDisclosure.opened}>
-        <DialogContent className='rounded-3xl sm:max-w-lg' showCloseButton={false}>
+        <DialogContent className='sm:max-w-lg' showCloseButton={false}>
           <DialogHeader>
             <DialogTitle>Посылка уже в пути!</DialogTitle>
             <DialogDescription>

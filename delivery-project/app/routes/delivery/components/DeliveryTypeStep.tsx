@@ -92,8 +92,7 @@ export const DeliveryTypeStep = () => {
           onClick={() => handleClickTypeDelivery(delivery)}
         >
           <div className='bg-secondary flex h-12 w-12 items-center justify-center rounded-full'>
-            {/* TODO: Fix backend type */}
-            {delivery.type === ('express' as any) ? (
+            {(delivery.type as unknown as string) === 'express' ? (
               <PlaneIcon size={18} />
             ) : (
               <BusFrontIcon size={18} />

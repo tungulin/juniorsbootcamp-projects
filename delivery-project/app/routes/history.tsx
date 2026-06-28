@@ -79,14 +79,31 @@ const History = () => {
       <H4 className='mt-5'>История отправлений</H4>
       <div className='mt-6'>
         {orders.map((order) => (
-          <div key={order._id} className='h-[60px]'>
-            <div className='grid h-full grid-cols-8 items-center'>
+          <div key={order._id}>
+            <div className='flex flex-col gap-1 py-3 md:hidden'>
+              <div className='flex items-center justify-between'>
+                <Small className='font-medium'>{STATUS_MAPA[order.status] ?? order.status}</Small>
+                {(order.status as unknown as string) !== 'canceled' && (
+                  <Button
+                    size='sm'
+                    variant='outline'
+                    onClick={() => handleCancelDelivery(order._id)}
+                  >
+                    Отменить
+                  </Button>
+                )}
+              </div>
+              <Small className='text-muted-foreground'>
+                {formatAddress(order.receiverAddress)}
+              </Small>
+              <Small className='text-muted-foreground'>{order._id}</Small>
+            </div>
+            <div className='hidden h-[60px] grid-cols-8 items-center md:grid'>
               <Small className='col-span-1'>{STATUS_MAPA[order.status] ?? order.status}</Small>
               <Small className='col-span-3'>{formatAddress(order.receiverAddress)}</Small>
               <Small className='col-span-3'>{order._id}</Small>
               <div className='col-span-1'>
-                {/* TODO: Fix type backend */}
-                {order.status !== ('canceled' as any) && (
+                {(order.status as unknown as string) !== 'canceled' && (
                   <Button variant='outline' onClick={() => handleCancelDelivery(order._id)}>
                     Отменить
                   </Button>

@@ -1,21 +1,66 @@
-# React Router + shadcn/ui
+# 🚚 Delivery Project
 
-This is a template for a new React Router project with React, TypeScript, and shadcn/ui.
+Учебное fullstack-приложение для оформления и отслеживания доставки посылок.
 
-## Adding components
+## 🛠️ Стек
 
-To add components to your app, run the following command:
+- **React 19** + **React Router v7**
+- **TypeScript**
+- **TanStack Query**
+- **React Hook Form** + **Zod** — формы и валидация
+- **Tailwind CSS v4** + **shadcn/ui (Base UI)** — UI
+- **Axios** + **@siberiacancode/apicraft** — HTTP-клиент и кодогенерация API
+- **Sonner** — уведомления
+- **pnpm**
+
+## 📸 Скриншоты
+
+![Авторизация](screenshots/auth.png)
+
+![Главная](screenshots/home.png)
+
+![Форма получателя](screenshots/receiver-form.png)
+
+## ✨ Функциональность
+
+- Авторизация (защищённые маршруты)
+- Расчёт стоимости доставки по городам и размеру посылки
+- Оформление заказа — пошаговый флоу:
+  1. Тип доставки
+  2. Адрес отправителя
+  3. Адрес получателя
+  4. Данные отправителя
+  5. Данные получателя
+  6. Тип оплаты
+  7. Подтверждение заказа
+- История отправлений с отменой заказа
+- Отслеживание посылки по номеру заказа
+- Профиль пользователя
+
+## 🚀 Запуск
 
 ```bash
-npx shadcn@latest add button
+pnpm install
+pnpm dev
 ```
 
-This will place the ui components in the `components` directory.
+Сборка для продакшена:
 
-## Using components
+```bash
+pnpm build
+pnpm start
+```
 
-To use the components in your app, import them as follows:
+## 📁 Структура
 
-```tsx
-import { Button } from '@/shared/ui/button';
+```
+app/
+├── generated/api/     # Автогенерированные типы и хуки (openapi-ts)
+├── routes/
+│   ├── home/          # Главная: расчёт доставки + отслеживание
+│   ├── delivery/      # Пошаговое оформление заказа
+│   ├── history.tsx    # История отправлений
+│   ├── profile.tsx    # Профиль
+│   └── auth.tsx       # Авторизация
+└── shared/            # UI-компоненты, утилиты, форм-примитивы
 ```

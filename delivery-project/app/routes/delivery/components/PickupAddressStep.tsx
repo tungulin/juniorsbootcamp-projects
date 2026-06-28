@@ -8,9 +8,9 @@ import { Button } from '@/shared/ui/button';
 import { useDeliveryContext } from '../context';
 
 const receiveAddressFormSchema = z.object({
-  street: z.string().min(2, 'Введите название улицы').max(50, 'Название улицы слишком длинное'),
-  house: z.string().min(1, 'Введите номер дома').max(10, 'Номер дома слишком длинный'),
-  apartment: z.string().min(1, 'Введите номер квартиры').max(10, 'Номер квартиры слишком длинный'),
+  street: z.string().min(2, 'Введите название улицы').max(30, 'Название улицы слишком длинное'),
+  house: z.string().min(1, 'Введите номер дома').regex(/^\d+$/, 'Только цифры'),
+  apartment: z.string().min(1, 'Введите номер квартиры').regex(/^\d+$/, 'Только цифры'),
   comment: z.string()
 });
 
