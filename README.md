@@ -1,8 +1,17 @@
-# 🧪 Frontend Pet Projects
+<div align="center">
+  <a href="https://siberiacancode.github.io/reactuse/">
+    <picture>
+      <img src="screenshots/main.png" width="256" />
+    </picture>
+  </a>
+  <h1>🐣👾 Pet Projects × juniorsbootcamp</h1>
+</div>
 
-<img src="screenshots/main.png" width="400" />
+Коллекция пет-проектов для исследования и сравнения технологий в мире фронтенда. Все проекты построены на **React**, но каждый исследует разные UI-библиотеки, подходы к стейт-менеджменту, формам, роутингу и другим инструментам экосистемы.
 
-Коллекция пет-проектов для изучения современных технологий в мире фронтенда. Все проекты построены на **React**, но каждый исследует разные UI-библиотеки, подходы к стейт-менеджменту, формам, роутингу и другим инструментам экосистемы.
+## 👾 juniorsbootcamp
+
+Идеи и задания для проектов взяты с [juniorsbootcamp.ru](https://juniorsbootcamp.ru/) — платформы с подборкой проектов для исследования разных подходов во фронтенд-разработке.
 
 ## 📦 Проекты
 
@@ -18,7 +27,7 @@
 - **TanStack Query**
 - **React Hook Form** + **Zod** — формы и валидация
 - **Tailwind CSS v4** + **shadcn/ui (Base UI)** — UI
-- **@siberiacancode/apicraft** — HTTP-клиент и кодогенерация API
+- **@siberiacancode/apicraft** — кодогенерация API
 - **@siberiacancode/reactuse** — React хуки
 - **pnpm**
 

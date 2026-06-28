@@ -9,7 +9,7 @@
 - **TanStack Query**
 - **React Hook Form** + **Zod** — формы и валидация
 - **Tailwind CSS v4** + **shadcn/ui (Base UI)** — UI
-- **Axios** + **@siberiacancode/apicraft** — HTTP-клиент и кодогенерация API
+- **Axios** + **@siberiacancode/apicraft** — кодогенерация API
 - **Sonner** — уведомления
 - **pnpm**
 
