@@ -1,2 +1,2 @@
+export { EllipseIcon } from './EllipseIcon';
 export { GitHubIcon } from './GitHubIcon';
-export { LogoIcon } from './LogoIcon';

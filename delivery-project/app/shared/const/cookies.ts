@@ -1,7 +1,3 @@
-export const PREFIX = 'jbp-projects';
+export const PREFIX_COOKIE = 'jbp-projects';
 
-export const COOKIES = {
-  THEME: `${PREFIX}-theme`,
-  COOKIE_CONSENT: `${PREFIX}-cookie-consent`,
-  TASK_SETTINGS: `${PREFIX}-task-settings`
-} as const;
+export const THEME_COOKIE_KEY = `${PREFIX_COOKIE}-theme`;

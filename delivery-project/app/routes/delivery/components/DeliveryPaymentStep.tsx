@@ -12,6 +12,7 @@ export const DeliveryPaymentStep = () => {
   const [payer, setPayer] = useState(context.deliveryOrder.payer ?? 'sender');
 
   const handleClickNext = () => {
+    //TODO: Fix backend type
     context.setDeliveryOrder({ ...context.deliveryOrder, payer: payer as any });
     context.stepper.next();
   };

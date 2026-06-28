@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import type { DeliveryPoint } from '@/generated/api';
 
 import { useGetApiDeliveryPointsQuery } from '@/generated/api';
-import { EllipseIcon } from '@/shared/icons/EllipseIcon';
+import { EllipseIcon } from '@/shared/icons';
 import {
   Combobox,
   ComboboxContent,

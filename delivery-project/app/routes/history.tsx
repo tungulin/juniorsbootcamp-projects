@@ -1,7 +1,9 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import {
+  getApiDeliveryOrdersQueryKey,
   useGetApiDeliveryOrdersQuery,
   usePutApiDeliveryOrdersCancelMutation
 } from '@/generated/api';
@@ -9,7 +11,7 @@ import { Main } from '@/layout';
 import { formatAddress } from '@/shared/lib/format';
 import { Button } from '@/shared/ui/button';
 import { Separator } from '@/shared/ui/separator';
-import { H4, Large } from '@/shared/ui/typography';
+import { H4, Large, Small } from '@/shared/ui/typography';
 
 const STATUS_MAPA: Record<string, string> = {
   in_processing: 'В процессе',
@@ -22,8 +24,25 @@ const STATUS_MAPA: Record<string, string> = {
 const History = () => {
   const deliveryOrderQuery = useGetApiDeliveryOrdersQuery();
   const cancelDeliveryMutation = usePutApiDeliveryOrdersCancelMutation();
+  const queryClient = useQueryClient();
 
   const orders = deliveryOrderQuery.data?.data?.orders ?? [];
+
+  const handleCancelDelivery = (orderId: string) =>
+    cancelDeliveryMutation.mutate(
+      {
+        body: {
+          orderId
+        }
+      },
+      {
+        onSuccess: () => {
+          toast.success('Заказ отменен!');
+          queryClient.invalidateQueries({ queryKey: [getApiDeliveryOrdersQueryKey] });
+        },
+        onError: () => toast.error('Не удалось отменить заказ')
+      }
+    );
 
   if (deliveryOrderQuery.isLoading) {
     return (
@@ -55,20 +74,6 @@ const History = () => {
     );
   }
 
-  const handleCancelDelivery = (orderId: string) => {
-    cancelDeliveryMutation.mutate(
-      {
-        body: {
-          orderId
-        }
-      },
-      {
-        onSuccess: () => toast.success('Заказ отменен!'),
-        onError: () => toast.error('Не удалось отменить заказ')
-      }
-    );
-  };
-
   return (
     <Main>
       <H4 className='mt-5'>История отправлений</H4>
@@ -76,13 +81,16 @@ const History = () => {
         {orders.map((order) => (
           <div key={order._id} className='h-[60px]'>
             <div className='grid h-full grid-cols-8 items-center'>
-              <div className='col-span-1'>{STATUS_MAPA[order.status] ?? order.status}</div>
-              <div className='col-span-3'>{formatAddress(order.receiverAddress)}</div>
-              <div className='col-span-3'>{order._id}</div>
+              <Small className='col-span-1'>{STATUS_MAPA[order.status] ?? order.status}</Small>
+              <Small className='col-span-3'>{formatAddress(order.receiverAddress)}</Small>
+              <Small className='col-span-3'>{order._id}</Small>
               <div className='col-span-1'>
-                <Button variant='outline' onClick={() => handleCancelDelivery(order._id)}>
-                  Отменить
-                </Button>
+                {/* TODO: Fix type backend */}
+                {order.status !== ('canceled' as any) && (
+                  <Button variant='outline' onClick={() => handleCancelDelivery(order._id)}>
+                    Отменить
+                  </Button>
+                )}
               </div>
             </div>
             <Separator />

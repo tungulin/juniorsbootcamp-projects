@@ -8,7 +8,7 @@ import {
 } from '@siberiacancode/reactuse';
 import { createContext, use, useMemo, useState } from 'react';
 
-import { COOKIES } from '@/shared/const';
+import { THEME_COOKIE_KEY } from '@/shared/const';
 
 export type Theme = 'dark' | 'light' | 'system';
 
@@ -35,14 +35,14 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
 
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'system';
-    return (getCookie(COOKIES.THEME) as Theme | undefined) ?? 'system';
+    return (getCookie(THEME_COOKIE_KEY) as Theme | undefined) ?? 'system';
   });
 
   useIsomorphicLayoutEffect(() => {
     const root = document.documentElement;
     const activeTheme = getTheme(theme);
 
-    setCookie(COOKIES.THEME, theme, {
+    setCookie(THEME_COOKIE_KEY, theme, {
       path: '/'
     });
 

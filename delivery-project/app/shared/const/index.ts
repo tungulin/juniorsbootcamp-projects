@@ -1,2 +1,2 @@
-export { COOKIES } from './cookies';
+export * from './cookies';
 export * from './regex';

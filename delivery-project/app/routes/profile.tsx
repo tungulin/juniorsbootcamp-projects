@@ -6,8 +6,8 @@ import { z } from 'zod';
 import { useAuth } from '@/contexts';
 import { usePatchApiUsersProfileMutation } from '@/generated/api';
 import { Main } from '@/layout';
-import { PHONE_REGEX } from '@/shared/const';
 import { Form, FormInput } from '@/shared/form';
+import { useUserLocalStorage } from '@/shared/localltorage';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner';
 import { H2 } from '@/shared/ui/typography';
@@ -22,7 +22,6 @@ const profileSchema = z.object({
     .min(2, 'Имя должно содержать минимум 2 символа')
     .max(50, 'Имя слишком длинное'),
   middlename: z.string().max(50, 'Отчество слишком длинное').optional().or(z.literal('')),
-  phone: z.string().regex(PHONE_REGEX, 'Введите телефон в формате +7 (999) 999-99-99'),
   email: z.email('Некорректный email'),
   city: z.string().min(2, 'Укажите город').max(100, 'Название города слишком длинное')
 });
@@ -31,6 +30,7 @@ type ProfileFormFields = z.infer<typeof profileSchema>;
 
 const Profile = () => {
   const { user } = useAuth();
+  const userStorage = useUserLocalStorage();
 
   const patchProfileMutation = usePatchApiUsersProfileMutation();
 
@@ -41,13 +41,19 @@ const Profile = () => {
       firstname: user?.firstname ?? '',
       email: user?.email ?? '',
       middlename: user?.middlename ?? '',
-      phone: user?.phone ?? '',
       city: user?.city ?? ''
     }
   });
 
   const handleSubmitForm = (fields: ProfileFormFields) => {
-    patchProfileMutation.mutate({ body: { profile: fields, phone: fields.phone } });
+    patchProfileMutation.mutate(
+      { body: { profile: fields, phone: user!.phone } },
+      {
+        onSuccess: (response) => {
+          userStorage.set(response.data.user);
+        }
+      }
+    );
   };
 
   return (
@@ -62,6 +68,7 @@ const Profile = () => {
             label='Телефон'
             name='phone'
             placeholder='+7 (___) ___-__-__'
+            value={user!.phone}
           />
           <FormInput label='Имя' name='firstname' placeholder='Динозаврик' />
           <FormInput label='Email' name='email' placeholder='ivanov@example.com' />

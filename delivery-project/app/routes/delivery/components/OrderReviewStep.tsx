@@ -1,4 +1,5 @@
 import { useDisclosure } from '@siberiacancode/reactuse';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 import { usePostApiDeliveryOrderMutation } from '@/generated/api';
@@ -33,6 +34,7 @@ export const OrderReviewStep = () => {
   } = context.deliveryOrder;
 
   const successDisclosure = useDisclosure();
+  const navigate = useNavigate();
 
   const handleCreateDelivery = () => {
     deliveryOrderMutation.mutate(
@@ -55,6 +57,9 @@ export const OrderReviewStep = () => {
       }
     );
   };
+
+  const handleNavigateToHome = () => navigate('/');
+  const handleNavigateToHistory = () => navigate('/history');
 
   return (
     <>
@@ -125,10 +130,10 @@ export const OrderReviewStep = () => {
           </DialogHeader>
           <img alt='success-feedback' className='mx-auto my-8 w-48' src='/success-feedback.png' />
           <div className='flex gap-2'>
-            <Button className='flex-1' size='lg'>
+            <Button className='flex-1' size='lg' onClick={handleNavigateToHome}>
               На главную
             </Button>
-            <Button className='bg-brand flex-1' size='lg'>
+            <Button className='bg-brand flex-1' size='lg' onClick={handleNavigateToHistory}>
               Статус заявки
             </Button>
           </div>

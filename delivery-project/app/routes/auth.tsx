@@ -46,7 +46,7 @@ const Auth = () => {
   const signInUserMutation = usePostApiUsersSigninMutation();
 
   const authTokenStorage = useAuthTokenLocalStorage();
-  const userTokenStorage = useUserLocalStorage();
+  const userStorage = useUserLocalStorage();
 
   const [code, setCode] = useState('');
   const [isSendingPhone, togglIsSendingPhone] = useBoolean(true);
@@ -77,7 +77,7 @@ const Auth = () => {
       {
         onSuccess: (resp) => {
           authTokenStorage.set(resp.data.token);
-          userTokenStorage.set(resp.data.user);
+          userStorage.set(resp.data.user);
           navigate('/');
         },
         onError: () => toast.error('Не удалось авторизоваться')
